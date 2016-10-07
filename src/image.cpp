@@ -38,7 +38,7 @@ void Image::setColor(unsigned int i, unsigned int j, unsigned char r, unsigned c
 
 // Save function inspired from the stackoverflow link of the project notes
 
-void Image::save(char* filename)
+void Image::save(const char* filename)
 {
 	ofstream stream;
 	stream.open(filename);
@@ -66,7 +66,7 @@ void Image::save(char* filename)
 
 	unsigned int padSize  = (4-(m_width*3)%4)%4;
 	unsigned int sizeData = m_width*m_height*3 + m_height*padSize;
-	unsigned int sizeAll  = sizeData + sizeof(file) + sizeof(info);
+	size_t sizeAll  = sizeData + sizeof(file) + sizeof(info);
 
 	file[ 2] = static_cast<unsigned char>(sizeAll    );
 	file[ 3] = static_cast<unsigned char>(sizeAll>> 8);
@@ -88,8 +88,8 @@ void Image::save(char* filename)
 	info[22] = static_cast<unsigned char>(sizeData>>16);
 	info[23] = static_cast<unsigned char>(sizeData>>24);
 
-	stream.write((char*)file, sizeof(file));
-	stream.write((char*)info, sizeof(info));
+	stream.write(reinterpret_cast<char*>(file), sizeof(file));
+	stream.write(reinterpret_cast<char*>(info), sizeof(info));
 
 	unsigned char pad[3] = {0,0,0};
 
@@ -101,7 +101,7 @@ void Image::save(char* filename)
 			pixel[0] = m_blue[j*m_width + i];
 			pixel[1] = m_green[j*m_width + i];
 			pixel[2] = m_red[j*m_width + i];
-			stream.write((char*)pixel, 3);
+			stream.write(reinterpret_cast<char*>(pixel), 3);
 		}
-		stream.write((char*) pad, padSize);
+		stream.write(reinterpret_cast<char*>(pad), padSize);
 }	}

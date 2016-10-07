@@ -54,7 +54,7 @@ void Camera::plotScene(Scene s)
 			setColor(i,j,color);
 }		}
 
-void Camera::save(char* filename)
+void Camera::save(string filename)
 {
-	m_image.save(filename);
+	m_image.save(filename.c_str());
 }

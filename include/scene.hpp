@@ -14,8 +14,8 @@ class Scene
 		Scene(std::vector<Sphere> spheres, Vector light, double intensity);
 
 		Vector normal(unsigned int i, Vector point);
-		Vector getColor(unsigned int i) const;
-		bool isSpecular(unsigned int i) const;
+		Vector getColor(unsigned int i) const __attribute__((pure));
+		bool isSpecular(unsigned int i) const __attribute__((pure));
 		Ray reflect(Ray r, Vector intersect, unsigned int i) const;
 
 		std::pair<unsigned int,double> computeIntersect(Ray r) const;

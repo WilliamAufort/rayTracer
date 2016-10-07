@@ -12,10 +12,10 @@ class Sphere
 		Sphere(Vector center, double r);
 		Sphere(Vector center, double r, Material mat);
 
-		Vector getColor() const;
+		Vector getColor() const __attribute__((pure));
 		double computeIntersect(Ray ray) const;
 		Vector normal(Vector point) const;
-		bool isSpecular() const;
+		bool isSpecular() const __attribute__((pure));
 		Ray reflect(Ray r, Vector intersect) const;
 
 	private:

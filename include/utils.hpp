@@ -16,4 +16,6 @@ std::vector<double> discriminant(double a, double b, double c) __attribute__((co
 
 double convertColor(double t) __attribute__((const));
 
+//char* convertString(std::string s) __attribute__((const));
+
 #endif

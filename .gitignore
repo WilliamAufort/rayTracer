@@ -1,5 +1,5 @@
 # Compiled Object files
-obj/*.o
+obj/
 
 # Executables
 rayTracer

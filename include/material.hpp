@@ -10,8 +10,8 @@ class Material
 		Material(Vector color);
 		Material(Vector color, bool specular);
 
-		Vector getColor() const;
-		bool isSpecular() const;
+		Vector getColor() const __attribute__((pure));
+		bool isSpecular() const __attribute__((pure));
 
 	private:
 		Vector m_color;

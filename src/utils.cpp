@@ -40,3 +40,4 @@ double convertColor(double t)
 	else if (t < 0) return 0;
 	else return t;
 }
+

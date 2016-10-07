@@ -11,10 +11,10 @@ class Image
 		Image(unsigned int height, unsigned int width);
 
 		bool isValidPixel(unsigned int i, unsigned int j) __attribute__((pure));
-		unsigned int getHeight() const;
-		unsigned int getWidth() const;
+		unsigned int getHeight() const __attribute__((pure));
+		unsigned int getWidth() const __attribute__((pure));
 		void setColor(unsigned int i, unsigned int j, unsigned char red, unsigned char green, unsigned char blue);
-		void save(char* filename);
+		void save(const char* filename);
 
 	private:
 		unsigned int m_height;

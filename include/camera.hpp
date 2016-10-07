@@ -14,9 +14,9 @@ class Camera
 		Camera(unsigned int height, unsigned int width);
 		Camera(Vector center, double fov, Vector direction, Vector up, unsigned int height, unsigned int width);
 
-		Vector getCenter() const;
-		unsigned int getHeight() const;
-		unsigned int getWidth() const;
+		Vector getCenter() const __attribute__((pure));
+		unsigned int getHeight() const __attribute__((pure));
+		unsigned int getWidth() const __attribute__((pure));
 
 		Ray startingRay(unsigned int i, unsigned int j);
 
@@ -24,7 +24,7 @@ class Camera
 		void setColor(unsigned int i, unsigned int j, double gray);
 		void setColor(unsigned int i, unsigned int j, Vector color);
 		void plotScene(Scene s);
-		void save(char* filename);
+		void save(std::string filename);
 
 	private:
 		Vector m_center;
