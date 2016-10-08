@@ -15,14 +15,18 @@ class Scene
 
 		Vector normal(unsigned int i, Vector point);
 		Vector getColor(unsigned int i) const __attribute__((pure));
+
 		bool isSpecular(unsigned int i) const __attribute__((pure));
 		Ray reflect(Ray r, Vector intersect, unsigned int i) const;
+
+		bool isTransparent(unsigned int i) const __attribute__((pure));
+		std::pair<bool,Ray> refract(Ray r, Vector intersect, unsigned int i) const;
 
 		std::pair<unsigned int,double> computeIntersect(Ray r) const;
 		bool isShadowed(Vector point) const;
 
 		Vector getColor(Ray r);
-		Vector getColor(Ray r, unsigned int nb_rebounds);
+		Vector getColor(Ray r, unsigned int nb_rebounds, bool allowShadows);
 
 	private:
 		std::vector<Sphere> m_spheres;

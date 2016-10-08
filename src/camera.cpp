@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Camera::Camera() : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image()) {} // The configuration of the camera in the project
+Camera::Camera() : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image()) {} // The configuration of the camera in the project // (0,0,55) normally
 
 Camera::Camera(unsigned int height, unsigned int width) : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image(height,width)){}
 

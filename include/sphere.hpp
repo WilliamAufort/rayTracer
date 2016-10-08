@@ -4,6 +4,7 @@
 #include "vector.hpp"
 #include "ray.hpp"
 #include "material.hpp"
+#include <utility>
 
 class Sphere
 {
@@ -17,6 +18,8 @@ class Sphere
 		Vector normal(Vector point) const;
 		bool isSpecular() const __attribute__((pure));
 		Ray reflect(Ray r, Vector intersect) const;
+		bool isTransparent() const __attribute__((pure));
+		std::pair<bool,Ray> refract(Ray r, Vector intersect) const;
 
 	private:
 		Vector m_center;

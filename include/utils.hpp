@@ -6,6 +6,8 @@
 const double epsilon = 0.0000001;
 const double pi = 3.1415926535;
 const unsigned int max_rebounds = 5;
+const double n_air = 1;
+const double n_glass = 3; // Seems unrealistic, but overwise we don't see anything
 
 bool closeEnough(double d1, double d2) __attribute__((const));
 
@@ -15,7 +17,5 @@ bool isNonPositive(double d) __attribute__((const));
 std::vector<double> discriminant(double a, double b, double c) __attribute__((const));
 
 double convertColor(double t) __attribute__((const));
-
-//char* convertString(std::string s) __attribute__((const));
 
 #endif
