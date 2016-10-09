@@ -34,8 +34,9 @@ vector<double> discriminant(double a, double b, double c)
 	return solutions;
 }
 
-double convertColor(double t)
+double convertColor(double t, bool gamma_correction)
 {
+	if (gamma_correction) t = pow(t/255,1/2.2)*255;
 	if (t > 255) return 255;
 	else if (t < 0) return 0;
 	else return t;

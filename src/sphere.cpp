@@ -68,7 +68,6 @@ pair<bool,Ray> Sphere::refract(Ray r, Vector intersect) const
 	double prod = scalarProd(i,n);
 	if (prod > 0)
 	{
-		cout << "swap" << endl;
 		swap(n1,n2);
 		n = -n;
 	}

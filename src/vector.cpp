@@ -65,11 +65,11 @@ void Vector::printVector(ostream& flux) const
 	flux <<	"(" << m_x << "," << m_y << "," << m_z << ")";
 }
 
-Vector& Vector::convertIntoColor()
+Vector& Vector::convertIntoColor(bool gamma_correction)
 {
-	m_x = convertColor(m_x);
-	m_y = convertColor(m_y);
-	m_z = convertColor(m_z);
+	m_x = convertColor(m_x,gamma_correction);
+	m_y = convertColor(m_y,gamma_correction);
+	m_z = convertColor(m_z,gamma_correction);
 	return *this;
 }
 

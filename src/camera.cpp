@@ -5,11 +5,11 @@
 
 using namespace std;
 
-Camera::Camera() : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image()) {} // The configuration of the camera in the project // (0,0,55) normally
+Camera::Camera() : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image()), m_gamma_correction(false) {} // The configuration of the camera in the project
 
-Camera::Camera(unsigned int height, unsigned int width) : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image(height,width)){}
+Camera::Camera(unsigned int height, unsigned int width, bool gamma_correction) : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image(height,width)), m_gamma_correction(gamma_correction) {}
 
-Camera::Camera(Vector center, double fov, Vector direction, Vector up, unsigned int height, unsigned int width) : m_center(center), m_fov(fov), m_direction(direction), m_up(up), m_image(Image(height,width)) {}
+Camera::Camera(Vector center, double fov, Vector direction, Vector up, unsigned int height, unsigned int width, bool gamma_correction) : m_center(center), m_fov(fov), m_direction(direction), m_up(up), m_image(Image(height,width)), m_gamma_correction (gamma_correction){}
 
 Vector Camera::getCenter() const
 {
@@ -37,7 +37,7 @@ Ray Camera::startingRay(unsigned int i, unsigned int j)
 
 void Camera::setColor(unsigned int i, unsigned int j, Vector color)
 {
-	Vector true_colors = color.convertIntoColor();
+	Vector true_colors = color.convertIntoColor(m_gamma_correction);
 	unsigned char r = static_cast<unsigned char>(true_colors.getX());
 	unsigned char g = static_cast<unsigned char>(true_colors.getY());
 	unsigned char b = static_cast<unsigned char>(true_colors.getZ());

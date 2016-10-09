@@ -20,7 +20,7 @@ class Vector
 		Vector& prodByScal(double lambda);
 		void printVector(std::ostream& flux) const;
 
-		Vector& convertIntoColor();
+		Vector& convertIntoColor(bool gamma_correction);
 
 	private:
 		double m_x;
