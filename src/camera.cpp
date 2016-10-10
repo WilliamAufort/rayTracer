@@ -2,14 +2,15 @@
 #include "../include/utils.hpp"
 #include <cmath>
 #include <iostream> // TODO For debug only
+#include <omp.h>
 
 using namespace std;
 
-Camera::Camera() : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image()), m_gamma_correction(false) {} // The configuration of the camera in the project
+Camera::Camera() : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image()), m_gamma_correction(false), m_omp(false) {} // The configuration of the camera in the project
 
-Camera::Camera(unsigned int height, unsigned int width, bool gamma_correction) : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image(height,width)), m_gamma_correction(gamma_correction) {}
+Camera::Camera(unsigned int height, unsigned int width, bool gamma_correction, bool omp) : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image(height,width)), m_gamma_correction(gamma_correction), m_omp(omp) {}
 
-Camera::Camera(Vector center, double fov, Vector direction, Vector up, unsigned int height, unsigned int width, bool gamma_correction) : m_center(center), m_fov(fov), m_direction(direction), m_up(up), m_image(Image(height,width)), m_gamma_correction (gamma_correction){}
+Camera::Camera(Vector center, double fov, Vector direction, Vector up, unsigned int height, unsigned int width) : m_center(center), m_fov(fov), m_direction(direction), m_up(up), m_image(Image(height,width)), m_gamma_correction (false), m_omp(false) {}
 
 Vector Camera::getCenter() const
 {
@@ -46,13 +47,25 @@ void Camera::setColor(unsigned int i, unsigned int j, Vector color)
 
 void Camera::plotScene(Scene s)
 {
-	for(unsigned int i = 0; i < m_image.getWidth(); i++)
-		for(unsigned int j = 0; j < m_image.getHeight(); j++)
-		{
-			Ray r = startingRay(i,j);
-			Vector color = s.getColor(r);			
-			setColor(i,j,color);
-}		}
+	if (m_omp)
+	{
+		#pragma omp parallel for schedule(dynamic,1)
+		for(unsigned int i = 0; i < m_image.getWidth(); i++)
+			for(unsigned int j = 0; j < m_image.getHeight(); j++)
+			{
+				Ray r = startingRay(i,j);
+				Vector color = s.getColor(r);
+				setColor(i,j,color);
+	}		}
+	else
+	{
+		for(unsigned int i = 0; i < m_image.getWidth(); i++)
+			for(unsigned int j = 0; j < m_image.getHeight(); j++)
+			{
+				Ray r = startingRay(i,j);
+				Vector color = s.getColor(r);
+				setColor(i,j,color);
+}	}		}
 
 void Camera::save(string filename)
 {

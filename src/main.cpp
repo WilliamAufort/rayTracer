@@ -17,10 +17,11 @@ int main(int argc, char* argv[])
 		cout << "./rayTracer" << endl;
 		cout << "--output file		Save the image in file" << endl;
 		cout << "--gamma			Use gamma correction" << endl;
+		cout << "--omp				Use OpenMP" << endl;
 		cout << "-h / --help		You're actually in the help mode" << endl;
 		return EXIT_FAILURE;
 	}
-	Camera test(500,500,arguments.getOption("-gamma"));
+	Camera test(500,500,arguments.getOption("-gamma"),arguments.getOption("-omp"));
 	Scene s;
 	test.plotScene(s);
 	test.save(arguments.getParameter("-output","test.bmp"));

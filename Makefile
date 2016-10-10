@@ -3,8 +3,8 @@ C11=-std=c++11
 FLAGSBASE= -O2 -W -Wextra -Wcast-qual -Wcast-align -Wfloat-equal -Wshadow -Wpointer-arith -Wunreachable-code -Wchar-subscripts -Wcomment -Wformat -Werror-implicit-function-declaration -Wmain -Wmissing-braces -Wparentheses -Wsequence-point -Wreturn-type -Wswitch -Wuninitialized -Wreorder -Wundef -Wwrite-strings -Wsign-compare -Wmissing-declarations 
 NAZIBASE= $(FLAGSBASE) -pedantic -Wconversion -Wmissing-noreturn -Wold-style-cast -Wall -Wunused -Wsign-conversion -Wunused -Wstrict-aliasing -Wstrict-overflow -Wconversion -Wdisabled-optimization -Wsuggest-attribute=const -Wsuggest-attribute=noreturn -Wsuggest-attribute=pure -Wlogical-op 
 NAZI= $(NAZIBASE) -Weffc++
-CFLAGS=$(NAZIBASE)
-LDFLAGS= 
+CFLAGS=$(NAZIBASE) -fopenmp
+LDFLAGS= -fopenmp -lpthread
 EXEC=setup rayTracer 
 
 # Definitions of colors
