@@ -3,6 +3,10 @@
 
 #include <vector>
 
+#ifndef speedTest__
+#define speedTest__(data)   for (long blockTime = 0; (blockTime == 0 ? (blockTime = clock()) != 0 : false); cout << data << static_cast<double>((clock() - blockTime)) / CLOCKS_PER_SEC << endl)
+#endif
+
 const double epsilon = 0.0000001;
 const double pi = 3.1415926535;
 const unsigned int max_rebounds = 5;
