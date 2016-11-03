@@ -6,26 +6,54 @@
 
 using namespace std;
 
+/**
+* The zero vector
+**/
+
 Vector::Vector() : m_x(0), m_y(0), m_z(0) {}
+
+/**
+* Any vector
+**/
 
 Vector::Vector(double x, double y, double z) : m_x(x), m_y(y), m_z(z) {}
 
+/**
+* Copy
+**/
+
 Vector::Vector(Vector const& u) : m_x(u.m_x), m_y(u.m_y), m_z(u.m_z) {}
+
+/**
+* Return the first coordinate
+**/
 
 double Vector::getX() const
 {
 	return m_x;
 }
 
+/**
+* Return the second coordinate
+**/
+
 double Vector::getY() const
 {
 	return m_y;
 }
 
+/**
+* Return the third coordinate
+**/
+
 double Vector::getZ() const
 {
 	return m_z;
 }
+
+/**
+* Add a vector
+**/
 
 Vector& Vector::operator+=(const Vector& v)
 {
@@ -35,6 +63,10 @@ Vector& Vector::operator+=(const Vector& v)
 	return *this;
 }
 
+/**
+* Substract a vector
+**/
+
 Vector& Vector::operator-=(const Vector& v)
 {
 	m_x -= v.m_x;
@@ -42,6 +74,10 @@ Vector& Vector::operator-=(const Vector& v)
 	m_z -= v.m_z;
 	return *this;
 }
+
+/**
+* Opposite of a vector
+**/
 
 Vector Vector::operator-() const
 {
@@ -52,6 +88,10 @@ Vector Vector::operator-() const
 	return v;
 }
 
+/**
+* Product scalar * vector
+**/
+
 Vector& Vector::prodByScal(double lambda)
 {
 	m_x = lambda * m_x;
@@ -60,10 +100,18 @@ Vector& Vector::prodByScal(double lambda)
 	return *this;
 }
 
+/**
+* Print a vector
+**/
+
 void Vector::printVector(ostream& flux) const
 {
 	flux <<	"(" << m_x << "," << m_y << "," << m_z << ")";
 }
+
+/**
+* Convert a vector into a vector of colors
+**/
 
 Vector& Vector::convertIntoColor(bool gamma_correction)
 {
@@ -73,12 +121,20 @@ Vector& Vector::convertIntoColor(bool gamma_correction)
 	return *this;
 }
 
+/**
+* Add two vectors
+**/
+
 Vector operator+(Vector const& u, Vector const& v)
 {
 	Vector copie(u);
 	copie += v;
 	return copie;
 }
+
+/**
+* Substract two vectors
+**/
 
 Vector operator-(Vector const& u, Vector const& v)
 {
@@ -87,12 +143,21 @@ Vector operator-(Vector const& u, Vector const& v)
 	return copie;
 }
 
+/**
+* Multiply a vector by a scalar
+**/
+
 Vector operator*(double lambda, Vector const& u)
 {
 	Vector copie(u);
 	copie.prodByScal(lambda);
 	return copie;
 }
+
+/**
+* Product coordinate by coordinate
+* TODO useful ?
+**/
 
 Vector prodByCoord(Vector const& u, Vector const& v)
 {
@@ -103,10 +168,18 @@ Vector prodByCoord(Vector const& u, Vector const& v)
 	return res;
 }
 
+/**
+* Scalar product of two vectors
+**/
+
 double scalarProd(Vector const& u, Vector const& v)
 {
 	return u.getX() * v.getX() + u.getY() * v.getY() + u.getZ() * v.getZ();
 }
+
+/**
+* Cross product of two vectors
+**/
 
 Vector crossProd(Vector const& u, Vector const& v)
 {
@@ -117,21 +190,40 @@ Vector crossProd(Vector const& u, Vector const& v)
 	return res;
 }
 
+/**
+* Compute the norm of vector
+**/
+
 double norm(Vector const& u)
 {
 	return sqrt(squareNorm(u));
 }
+
+/**
+* Compute the squared norm of a vector
+* Square root free, we use it as often as possible
+**/
+
 double squareNorm(Vector const& u)
 {
 	return u.getX() * u.getX() + u.getY() * u.getY() + u.getZ() * u.getZ();
 }
+
+/**
+* Normalize a non-zero vector
+**/
+
 Vector normalize(Vector const& u)
 {
 	double n = norm(u);
-	if (closeEnough(n,0)) // do (n == 0) is unsafe with FP
+	if (closeEnough(n,0))
 		throw overflow_error("Division by zero!");
 	else return (1/n)*u ;
 }
+
+/**
+* Print a vector
+**/
 
 ostream& operator<<(ostream& flux, Vector const& u)
 {

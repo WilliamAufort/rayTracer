@@ -4,28 +4,44 @@
 
 using namespace std;
 
-parserArguments::parserArguments(vector<string> nomsOptions, vector<string> nomsParameters) :
+/**
+* Build the list of possible options and parameters
+**/
+
+parserArguments::parserArguments(vector<string> optionsNames, vector<string> parametersNames) :
     arguments(vector<string>()), options(map<string, bool>()), parameters(map<string, string>())
 {
-	for (string option : nomsOptions)
+	for (string option : optionsNames)
 		options[option] = false;
 
-	for (string param : nomsParameters)
+	for (string param : parametersNames)
 		parameters[param] = "";
 
 	options["h"] = false;
 	options["-help"] = false;
 }
 
+/**
+* Does the user ask for help?
+**/
+
 bool parserArguments::askHelp()
 {
 	return options["h"] || options["-help"];
 }
 
+/**
+* Return the number of arguments
+**/
+
 size_t parserArguments::nbArguments() const
 {
 	return arguments.size();
 }
+
+/**
+* Parse arguments and options
+**/
 
 void parserArguments::parse(int argc, char* argv[])
 {
@@ -55,29 +71,45 @@ void parserArguments::parse(int argc, char* argv[])
 			nbArgs++;
 }	}	}
 
+/**
+* Get the argument in a given index
+**/
+
 string parserArguments::getArgument(size_t index) const
 {
 	return arguments[index];
 }
 
-bool parserArguments::getOption(string nom) const
+/**
+* Is the option used?
+**/
+
+bool parserArguments::getOption(string name) const
 {
-	return options.at(nom);
+	return options.at(name);
 }
 
-string parserArguments::getParameter(string nom) const
+/**
+* TODO
+**/
+
+string parserArguments::getParameter(string name) const
 {
-	return parameters.at(nom);
+	return parameters.at(name);
 }
 
-string parserArguments::getParameter(string nom, string def) const
+string parserArguments::getParameter(string name, string def) const
 {
-	if (parameters.count(nom) == 0)
+	if (parameters.count(name) == 0)
 		return def;
-	if (parameters.at(nom) == "")
+	if (parameters.at(name) == "")
 		return def;
-	return parameters.at(nom);
+	return parameters.at(name);
 }
+
+/**
+* Get all the possible options
+**/
 
 vector<string> parserArguments::getOptionsNames()
 {
@@ -86,6 +118,10 @@ vector<string> parserArguments::getOptionsNames()
 	liste[1] = "-omp";
 	return liste;
 }
+
+/**
+* Get all the possible arguments
+**/
 
 vector<string> parserArguments::getParametersNames()
 {

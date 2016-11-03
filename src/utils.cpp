@@ -4,20 +4,36 @@
 
 using namespace std;
 
+/**
+* Are the two numbers close enough? (d1 == d2 is unsafe with doubles)
+**/
+
 bool closeEnough(double d1, double d2)
 {
     return fabs(d1-d2) < epsilon; 
 }
+
+/**
+* Is a double non-negative?
+**/
 
 bool isNonNegative(double d)
 {
 	return (d >= epsilon);
 }
 
+/**
+* Is a double non-positive?
+**/
+
 bool isNonPositive(double d)
 {
 	return (d <= - epsilon);
 }
+
+/**
+* Compute the (eventual) roots of a quadratic function
+**/
 
 vector<double> discriminant(double a, double b, double c)
 {
@@ -33,6 +49,10 @@ vector<double> discriminant(double a, double b, double c)
 	}
 	return solutions;
 }
+
+/**
+* Correct a color
+**/
 
 double convertColor(double t, bool gamma_correction)
 {

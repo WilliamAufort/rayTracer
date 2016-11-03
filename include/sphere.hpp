@@ -6,6 +6,10 @@
 #include "material.hpp"
 #include <utility>
 
+/**
+* The sphere is the simpler primitive to print in a scene
+**/
+
 class Sphere
 {
 	public:

@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/**
+* The scene of the project
+**/
+
 Scene::Scene() : m_light(Vector(-10,20,40)), m_intensity(2000)
 {
 	Sphere s; //central sphere
@@ -21,38 +25,70 @@ Scene::Scene() : m_light(Vector(-10,20,40)), m_intensity(2000)
 	m_spheres.push_back(s_behind);
 	m_spheres.push_back(s_front);
 }
+
+/**
+* The scene with all the parameters given by the user
+**/
 	
 Scene::Scene(vector<Sphere> spheres, Vector light, double intensity) : m_spheres(spheres), m_light(light), m_intensity(intensity) {}
+
+/**
+* Return the normal vector to the i-th sphere of the scene
+**/
 
 Vector Scene::normal(unsigned int i, Vector point)
 {
 	return (m_spheres[i]).normal(point);
 }
 
+/**
+* Return the color to the i-th sphere of the scene
+**/
+
 Vector Scene::getColor(unsigned int i) const
 {
 	return (m_spheres[i]).getColor();
 }
+
+/**
+* Is the i-th sphere of the scene specular?
+**/
 
 bool Scene::isSpecular(unsigned int i) const
 {
 	return (m_spheres[i]).isSpecular();
 }
 
+/**
+* Return the ray reflected on the i-th sphere of the scene
+**/
+
 Ray Scene::reflect(Ray r, Vector intersect, unsigned int i) const
 {
 	return (m_spheres[i]).reflect(r,intersect);
 }
+
+/**
+* Is the i-th sphere of the scene transparent?
+**/
 
 bool Scene::isTransparent(unsigned int i) const
 {
 	return (m_spheres[i]).isTransparent();
 }
 
+/**
+* Is there a refraction on the i-th sphere? If yes, return the refracted ray
+**/
+
 pair<bool,Ray> Scene::refract(Ray r, Vector intersect, unsigned int i) const
 {
 	return (m_spheres[i]).refract(r,intersect);
 }
+
+/**
+* Compute the intersection and the intersected primitive (if they exist) with a given ray
+**/
 
 pair<unsigned int,double> Scene::computeIntersect(Ray r) const
 {
@@ -76,6 +112,10 @@ pair<unsigned int,double> Scene::computeIntersect(Ray r) const
 	return make_pair(index,result);
 }
 
+/**
+* Is a point shadowed by the scene ?
+**/
+
 bool Scene::isShadowed(Vector point) const
 {
 	Ray r(point, m_light - point);
@@ -86,6 +126,10 @@ bool Scene::isShadowed(Vector point) const
 		Vector intersect_pt = r.getIntersect(t.second);
 		return (squareNorm(intersect_pt - point) < squareNorm(m_light - point));
 }	}
+
+/**
+* Compute the color in the direction of a ray
+**/
 
 Vector Scene::getColor(Ray r)
 {

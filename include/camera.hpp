@@ -6,6 +6,10 @@
 #include "ray.hpp"
 #include "scene.hpp"
 
+/**
+* The camera used by the raytracer
+**/
+
 class Camera
 {
 	public:

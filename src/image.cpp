@@ -6,24 +6,48 @@
 
 using namespace std;
 
+/**
+* A 255*255 image
+**/
+
 Image::Image() : m_height(256), m_width(256), m_red(vector<unsigned char>(256*256,0)), m_green(vector<unsigned char>(256*256,0)), m_blue(vector<unsigned char>(256*256,0)) {}
 
+/**
+* An image with given dimensions
+**/
+
 Image::Image(unsigned int height, unsigned int width) : m_height(height), m_width(width), m_red(vector<unsigned char>(height*width,0)), m_green(vector<unsigned char>(height*width,0)), m_blue(vector<unsigned char>(height*width,0)) {}
+
+/**
+* Is a pixel really inside the image ?
+**/
 
 bool Image::isValidPixel(unsigned int i, unsigned int j)
 {
 	return ((i < m_width) && (j < m_height));
 }
 
+/**
+* Return the height of the image
+**/
+
 unsigned int Image::getHeight() const
 {
 	return m_height;
 }
 
+/**
+* Return the width of the image
+**/
+
 unsigned int Image::getWidth() const
 {
 	return m_width;
 }
+
+/**
+* Set a given color to a pixel
+**/
 
 void Image::setColor(unsigned int i, unsigned int j, unsigned char r, unsigned char g, unsigned char b)
 {
@@ -36,7 +60,12 @@ void Image::setColor(unsigned int i, unsigned int j, unsigned char r, unsigned c
 	else throw invalid_argument("Pixel out of range!");
 }
 
-// Save function inspired from the stackoverflow link of the project notes
+/**
+* Save the image in a file
+* Note : This function is inspired from the stackoverflow link of the project notes
+* http://stackoverflow.com/questions/2654480/writing-bmp-image-in-pure-c-c-without-other-libraries
+**/
+
 
 void Image::save(const char* filename)
 {

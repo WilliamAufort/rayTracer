@@ -5,12 +5,14 @@
 #include<vector>
 #include<map>
 
-// TODO More english
+/**
+* Parse the arguments and the options provided in the command line
+**/
 
 class parserArguments
 {
 	public:
-		parserArguments(std::vector<std::string> nomsOptions, std::vector<std::string> nomsParameters);
+		parserArguments(std::vector<std::string> optionsNames, std::vector<std::string> parametersNames);
 		~parserArguments(){};
 		bool askHelp();
 
@@ -18,9 +20,9 @@ class parserArguments
 		void parse(int argc, char* argv[]);
 
 		std::string getArgument(size_t index) const;
-		bool getOption(std::string nom) const;
-		std::string getParameter(std::string nom) const;
-		std::string getParameter(std::string nom, std::string def) const;
+		bool getOption(std::string name) const;
+		std::string getParameter(std::string name) const;
+		std::string getParameter(std::string name, std::string def) const;
 
 		static std::vector<std::string> getOptionsNames();
 		static std::vector<std::string> getParametersNames();

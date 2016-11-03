@@ -4,6 +4,10 @@
 #include "utils.hpp"
 #include "vector.hpp"
 
+/**
+* Implementation of the materials
+**/
+
 class Material
 {
 	public:

@@ -3,6 +3,10 @@
 
 #include "vector.hpp"
 
+/**
+* Implementation of the rays used in the raytracer.
+**/
+
 class Ray
 {
 	public:

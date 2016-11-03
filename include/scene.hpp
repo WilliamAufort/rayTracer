@@ -7,6 +7,10 @@
 #include <vector>
 #include <utility>
 
+/**
+* The scene is the set of all objects we can see from the camera
+**/
+
 class Scene
 {
 	public:

@@ -5,16 +5,36 @@
 
 using namespace std;
 
-Sphere::Sphere() : m_center(Vector(0,0,0)), m_r(10), m_material(glass) {} // Example of the project
+/**
+* The central sphere of the project scene
+**/
+
+Sphere::Sphere() : m_center(Vector(0,0,0)), m_r(10), m_material(glass) {}
+
+/**
+* A white sphere with dimensions given
+**/
 
 Sphere::Sphere(Vector center, double r) : m_center(center), m_r(r), m_material(white) {}
 
+/**
+* A sphere with dimensions and color given
+**/
+
 Sphere::Sphere(Vector center, double r, Material mat) : m_center(center), m_r(r), m_material(mat) {}
+
+/**
+* Return the color of the sphere
+**/
 
 Vector Sphere::getColor() const
 {
 	return m_material.getColor();
 }
+
+/**
+* Compute the intersection between a given ray and the sphere
+**/
 
 double Sphere::computeIntersect(Ray ray) const
 {
@@ -37,27 +57,48 @@ double Sphere::computeIntersect(Ray ray) const
 	return sol;
 }
 
+/**
+* Compute the normal vector on a given point of the sphere
+**/
+
 Vector Sphere::normal(Vector point) const
 {
 	return point - m_center;
 }
+
+/**
+* Is the sphere specular?
+**/
 
 bool Sphere::isSpecular() const
 {
 	return m_material.isSpecular();
 }
 
+/**
+* Reflect a ray on a sphere, given the intersection
+**/
+
 Ray Sphere::reflect(Ray r, Vector intersect) const
 {
 	Vector i = r.getDirection();
 	Vector n = normal(intersect);
-	return Ray(intersect, i - (2 * scalarProd(i,n) / squareNorm(n)) * n); // No need to normalize i, but we divide by squareNorm to avoid normalization computations
+	return Ray(intersect, i - (2 * scalarProd(i,n) / squareNorm(n)) * n);
+    // Note : no need to normalize i, but we divide by squareNorm to avoid normalization computations
 }
+
+/**
+*  Is the sphere transparent?
+**/
 
 bool Sphere::isTransparent() const
 {
 	return m_material.isTransparent();
 }
+
+/**
+* Is there a refraction on the sphere? If yes, return the refracted ray
+**/
 
 pair<bool,Ray> Sphere::refract(Ray r, Vector intersect) const
 {

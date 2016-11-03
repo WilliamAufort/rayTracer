@@ -2,7 +2,10 @@
 #define DEF_IMAGE
 
 #include <vector>
-// See : http://stackoverflow.com/questions/2654480/writing-bmp-image-in-pure-c-c-without-other-libraries
+
+/**
+* Implementation of an image
+**/
 
 class Image
 {

@@ -3,6 +3,10 @@
 
 #include <iostream>
 
+/**
+* The most important class in the project, which modelizes vectors and points
+**/
+
 class Vector
 {
 	public:

@@ -6,26 +6,50 @@
 
 using namespace std;
 
-Camera::Camera() : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image()), m_gamma_correction(false), m_omp(false) {} // The configuration of the camera in the project
+/**
+* The configuration of the camera in the project
+**/
+
+Camera::Camera() : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image()), m_gamma_correction(false), m_omp(false) {}
+
+/**
+* Other constructors with more or less options
+**/
 
 Camera::Camera(unsigned int height, unsigned int width, bool gamma_correction, bool omp) : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image(height,width)), m_gamma_correction(gamma_correction), m_omp(omp) {}
 
 Camera::Camera(Vector center, double fov, Vector direction, Vector up, unsigned int height, unsigned int width) : m_center(center), m_fov(fov), m_direction(direction), m_up(up), m_image(Image(height,width)), m_gamma_correction (false), m_omp(false) {}
+
+/**
+* Get the position of the camera
+**/
 
 Vector Camera::getCenter() const
 {
 	return m_center;
 }
 
+/**
+* Get the height of the image saved from the camera
+**/
+
 unsigned int Camera::getHeight() const
 {
 	return m_image.getHeight();
 }
 
+/**
+* Get the width of the image saved from the camera
+**/
+
 unsigned int Camera::getWidth() const
 {
 	return m_image.getWidth();
 }
+
+/**
+* Build the ray from the camera used to print a particular pixel
+**/
 
 Ray Camera::startingRay(unsigned int i, unsigned int j)
 {
@@ -36,6 +60,10 @@ Ray Camera::startingRay(unsigned int i, unsigned int j)
 	return Ray(m_center,v);
 }
 
+/**
+* Set a pixel to a given color
+**/
+
 void Camera::setColor(unsigned int i, unsigned int j, Vector color)
 {
 	Vector true_colors = color.convertIntoColor(m_gamma_correction);
@@ -44,6 +72,10 @@ void Camera::setColor(unsigned int i, unsigned int j, Vector color)
 	unsigned char b = static_cast<unsigned char>(true_colors.getZ());
 	m_image.setColor(i,j,r,g,b);
 }
+
+/**
+* Build the image representing the scene 
+**/
 
 void Camera::plotScene(Scene s)
 {
@@ -66,6 +98,10 @@ void Camera::plotScene(Scene s)
 				Vector color = s.getColor(r);
 				setColor(i,j,color);
 }	}		}
+
+/**
+* Save the image in a file
+**/
 
 void Camera::save(string filename)
 {
