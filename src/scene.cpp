@@ -11,12 +11,12 @@ using namespace std;
 Scene::Scene() : m_light(Vector(-10,20,40)), m_intensity(2000)
 {
 	Sphere s; //central sphere
-	Sphere s_behind (Vector(0,0,1000),940,pink);
-	Sphere s_front(Vector(0,0,-1000),940,green);
-	Sphere s_above(Vector(0,1000,0),940,red);
-	Sphere s_below(Vector(0,-1000,0),990,blue);
-	Sphere s_left(Vector(1000,0,0),950,yellow);
-	Sphere s_right(Vector(-1000,0,0),950,white);
+	Sphere s_behind (Vector(0,0,1000),940,pink,Material());
+	Sphere s_front(Vector(0,0,-1000),940,green,Material());
+	Sphere s_above(Vector(0,1000,0),940,red,Material());
+	Sphere s_below(Vector(0,-1000,0),990,blue,Material());
+	Sphere s_left(Vector(1000,0,0),950,yellow,Material());
+	Sphere s_right(Vector(-1000,0,0),950,white,Material());
 	m_spheres.push_back(s);
 	m_spheres.push_back(s_left);
 	m_spheres.push_back(s_right);

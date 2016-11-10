@@ -9,19 +9,19 @@ using namespace std;
 * The central sphere of the project scene
 **/
 
-Sphere::Sphere() : m_center(Vector(0,0,0)), m_r(10), m_material(glass) {}
+Sphere::Sphere() : m_center(Vector(0,0,0)), m_r(10), m_color(black), m_material(glass) {}
 
 /**
 * A white sphere with dimensions given
 **/
 
-Sphere::Sphere(Vector center, double r) : m_center(center), m_r(r), m_material(white) {}
+Sphere::Sphere(Vector center, double r) : m_center(center), m_r(r), m_color(white), m_material(glass) {}
 
 /**
-* A sphere with dimensions and color given
+* A sphere with dimensions, color and material given
 **/
 
-Sphere::Sphere(Vector center, double r, Material mat) : m_center(center), m_r(r), m_material(mat) {}
+Sphere::Sphere(Vector center, double r, Vector color, Material mat) : m_center(center), m_r(r), m_color(color), m_material(mat) {}
 
 /**
 * Return the color of the sphere
@@ -29,7 +29,7 @@ Sphere::Sphere(Vector center, double r, Material mat) : m_center(center), m_r(r)
 
 Vector Sphere::getColor() const
 {
-	return m_material.getColor();
+	return m_color;
 }
 
 /**

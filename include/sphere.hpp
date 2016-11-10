@@ -15,7 +15,7 @@ class Sphere
 	public:
 		Sphere();
 		Sphere(Vector center, double r);
-		Sphere(Vector center, double r, Material mat);
+		Sphere(Vector center, double r, Vector color, Material mat);
 
 		Vector getColor() const __attribute__((pure));
 		double computeIntersect(Ray ray) const;
@@ -28,6 +28,7 @@ class Sphere
 	private:
 		Vector m_center;
 		double m_r;
+		Vector m_color;
 		Material m_material;
 };
 

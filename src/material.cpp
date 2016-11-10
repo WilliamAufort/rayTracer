@@ -3,36 +3,40 @@
 using namespace std;
 
 /**
-* A black material
+* A only diffuse material
 **/
 
-Material::Material() : m_color(Vector()), m_specular(false), m_transparent(false), m_refr_index(1) {} // Black color
-
-/**
-* A colored material
-**/
-
-Material::Material(Vector color) : m_color(color), m_specular(false), m_transparent(false), m_refr_index(1) {}
+Material::Material() : m_specular(false), m_transparent(false), m_refr_index(1) {}
 
 /**
 * A specular material
 **/
 
-Material::Material(Vector color, bool specular) : m_color(color), m_specular(specular), m_transparent(false), m_refr_index(1) {}
+Material::Material(bool specular) : m_specular(specular), m_transparent(false), m_refr_index(1) {}
 
 /**
 * A transparent material
 **/
 
-Material::Material(Vector color, bool transparent, double refr_index) : m_color(color), m_specular(false), m_transparent(transparent), m_refr_index(refr_index) {}
+Material::Material(bool transparent, double refr_index) : m_specular(false), m_transparent(transparent), m_refr_index(refr_index) {}
 
 /**
-* Return the color of the material
+* Set the specularity
 **/
 
-Vector Material::getColor() const
+void Material::setSpecularity(bool specular)
 {
-	return m_color;
+	m_specular = specular;
+}
+
+/**
+* Set the transparency
+**/
+
+void Material::setTransparency(bool specular, double index)
+{
+	m_specular = specular;
+	m_refr_index = index;
 }
 
 /**
