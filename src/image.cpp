@@ -7,10 +7,10 @@
 using namespace std;
 
 /**
-* A 255*255 image
+* An empty image, only for initialization
 **/
 
-Image::Image() : m_height(256), m_width(256), m_red(vector<unsigned char>(256*256,0)), m_green(vector<unsigned char>(256*256,0)), m_blue(vector<unsigned char>(256*256,0)) {}
+Image::Image() : m_height(0), m_width(0), m_red(vector<unsigned char>()), m_green(vector<unsigned char>()), m_blue(vector<unsigned char>()) {}
 
 /**
 * An image with given dimensions

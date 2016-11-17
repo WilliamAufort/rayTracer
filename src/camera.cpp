@@ -9,18 +9,10 @@
 using namespace std;
 
 /**
-* The configuration of the camera in the project
+* Setup camera
 **/
 
-Camera::Camera() : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image()), m_scene(Scene()), m_gamma_correction(false), m_omp(false) {}
-
-/**
-* Other constructors with more or less options
-**/
-
-Camera::Camera(unsigned int height, unsigned int width, Scene s, bool gamma_correction, bool omp) : m_center(Vector(0,0,55)), m_fov(pi/3), m_direction(Vector(0,0,-1)), m_up(Vector(1,0,0)), m_image(Image(height,width)), m_scene(s), m_gamma_correction(gamma_correction), m_omp(omp) {}
-
-Camera::Camera(Vector center, double fov, Vector direction, Vector up, unsigned int height, unsigned int width, Scene s) : m_center(center), m_fov(fov), m_direction(direction), m_up(up), m_image(Image(height,width)), m_scene(s), m_gamma_correction (false), m_omp(false) {}
+Camera::Camera() : m_center(Vector()), m_fov(0), m_direction(Vector()), m_up(Vector()), m_image(Image()), m_scene(Scene()), m_gamma_correction(false), m_omp(false) {}
 
 Camera::~Camera() {}
 

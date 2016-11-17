@@ -14,7 +14,6 @@ class Sphere
 {
 	public:
 		Sphere();
-		Sphere(Vector center, double r);
 		Sphere(Vector center, double r, Vector color, Material mat);
 		~Sphere() {};
 

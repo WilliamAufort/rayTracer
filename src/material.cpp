@@ -9,18 +9,6 @@ using namespace std;
 Material::Material() : m_specular(false), m_transparent(false), m_refr_index(1) {}
 
 /**
-* A specular material
-**/
-
-Material::Material(bool specular) : m_specular(specular), m_transparent(false), m_refr_index(1) {}
-
-/**
-* A transparent material
-**/
-
-Material::Material(bool transparent, double refr_index) : m_specular(false), m_transparent(transparent), m_refr_index(refr_index) {}
-
-/**
 * Set the specularity
 **/
 
