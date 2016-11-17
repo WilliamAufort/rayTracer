@@ -15,7 +15,7 @@ class Material
 		~Material() {};
 
 		void setSpecularity(bool specular);
-		void setTransparency(bool specular, double index);
+		void setTransparency(bool transparent, double index);
 
 		bool isSpecular() const __attribute__((pure));
 		bool isTransparent() const __attribute__((pure));

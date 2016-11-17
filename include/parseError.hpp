@@ -3,6 +3,10 @@
 
 #include <string>
 
+/**
+* Parse error handler
+**/
+
 class MessageException : public std::exception
 {
 	public:

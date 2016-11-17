@@ -21,9 +21,9 @@ void Material::setSpecularity(bool specular)
 * Set the transparency
 **/
 
-void Material::setTransparency(bool specular, double index)
+void Material::setTransparency(bool transparent, double index)
 {
-	m_specular = specular;
+	m_transparent = transparent;
 	m_refr_index = index;
 }
 
