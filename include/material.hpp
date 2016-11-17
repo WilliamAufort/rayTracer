@@ -14,6 +14,7 @@ class Material
 		Material();
 		Material(bool specular);
 		Material(bool transparent, double refr_index);
+		~Material() {};
 
 		void setSpecularity(bool specular);
 		void setTransparency(bool specular, double index);

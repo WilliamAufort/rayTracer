@@ -1,0 +1,149 @@
+%code requires {
+	#include "../include/camera.hpp"
+}
+
+%{
+
+namespace sceneParser {
+    class Driver;
+}
+
+#include <sstream>
+#include <iostream>
+#include "sceneParser.hpp"
+#include "lexer.h"
+#include "driver.h"
+#include "../include/parseError.hpp"
+#define yylex driver.lexer->yylex
+int	line_number	= 1;	/* number of current source line */
+
+
+Camera cam;
+
+using namespace std;
+%}
+
+%union
+{
+	double dbl;
+	Vector* vec;
+	Sphere* sph;
+	std::vector<Sphere>* array;
+	Scene* sc;
+	Material* mat;
+	std::pair<Vector,double>* p;
+}
+
+%token TEOF 0
+%token EOL FLOAT LPAR RPAR SEP
+%token LOOK_AT CAMERA_FOV OUTPUT_SIZE LIGHT_SOURCE
+%token BEGIN_SPHERE END_SPHERE CENTER RADIUS COLOR
+%token BEGIN_MATERIAL END_MATERIAL SPECULAR TRANSPARENT DIFFUSE EMISSIVE
+
+%type<dbl> FLOAT radius
+%type<vec> vector center color
+%type<sph> Sphere
+%type<array> ObjectList
+%type<sc> Scene
+%type<mat> material specular transparent diffuse emissive
+%type<p> Light
+
+%start Input
+
+%language "C++"
+%define api.namespace {sceneParser}
+%define parser_class_name {Parser}
+%parse-param {Driver &driver}
+%locations
+
+%error-verbose
+
+%%
+
+Input:
+Informations Scene TEOF { cam.setScene(*$2); driver.setResult(cam);}
+;
+
+Informations:
+ Lookat EOL Camera EOL Image EOL
+;
+
+Lookat:
+ LOOK_AT vector vector vector { cam.setLookat(*$2,*$3,*$4);}
+;
+
+Camera:
+ CAMERA_FOV FLOAT { cam.setFov($2);}
+;
+
+Image:
+ OUTPUT_SIZE FLOAT FLOAT { cam.setImage($2,$3);}
+;
+
+vector:
+ LPAR FLOAT SEP FLOAT SEP FLOAT RPAR { $$ = new Vector($2,$4,$6);};
+;
+
+Scene:
+ Light EOL ObjectList { $$ = new Scene(*$3,$1->first,$1->second);}
+;
+
+Light:
+ LIGHT_SOURCE vector FLOAT { $$ = new std::pair<Vector,double>(*$2,$3);}
+;
+
+ObjectList:
+ ObjectList Sphere  { std::vector<Sphere>* v = $1; v->push_back(*$2); $$ = v;}
+|					{ $$ = new std::vector<Sphere>();}
+;
+
+Sphere:
+ BEGIN_SPHERE EOL center radius color material END_SPHERE EOL { $$ = new Sphere(*$3,$4,*$5,*$6);}
+;
+
+center:
+ CENTER vector EOL { $$ = $2;}
+;
+
+radius:
+ RADIUS FLOAT EOL { $$ = $2;}
+;
+
+color:
+ COLOR vector EOL { $$ = $2;}
+;
+
+material:
+ BEGIN_MATERIAL EOL specular END_MATERIAL EOL { $$ = $3;}
+;
+
+specular:
+  SPECULAR EOL transparent	{ Material* m = $3; m->setSpecularity(true); $$ = m;}
+| transparent				{ $$ = $1;}
+;
+
+transparent:
+  TRANSPARENT FLOAT EOL diffuse { Material* m = $4; m->setTransparency(true,$2); $$ = m;}
+| diffuse						{ $$ = $1;}
+;
+
+diffuse:
+  DIFFUSE EOL emissive			{ $$ = $3;}
+| DIFFUSE FLOAT EOL emissive	{ $$ = $4;}  // TODO Modify when add diffuse
+| emissive						{ $$ = $1;}
+;
+
+emissive:
+  EMISSIVE FLOAT EOL		{ $$ = new Material();}  // Modify when add emissivity
+|							{ $$ = new Material();}
+;
+
+%%
+
+void sceneParser::Parser::error(const location_type& loc, const std::string& m)
+{
+    int location = loc.begin.line;
+    std::ostringstream out;
+    out << "line " << location << " : " << m;
+    throw ParseError(out.str());
+}

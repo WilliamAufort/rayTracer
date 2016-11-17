@@ -22,6 +22,12 @@ parserArguments::parserArguments(vector<string> optionsNames, vector<string> par
 }
 
 /**
+* Destructor
+**/
+
+parserArguments::~parserArguments() {}
+
+/**
 * Does the user ask for help?
 **/
 
@@ -90,13 +96,17 @@ bool parserArguments::getOption(string name) const
 }
 
 /**
-* TODO
+* Get the parameter of an option
 **/
 
 string parserArguments::getParameter(string name) const
 {
 	return parameters.at(name);
 }
+
+/**
+* Get the parameter of an option, with a defaut result otherwise
+**/
 
 string parserArguments::getParameter(string name, string def) const
 {

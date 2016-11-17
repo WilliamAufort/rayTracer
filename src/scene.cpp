@@ -33,6 +33,12 @@ Scene::Scene() : m_light(Vector(-10,20,40)), m_intensity(2000)
 Scene::Scene(vector<Sphere> spheres, Vector light, double intensity) : m_spheres(spheres), m_light(light), m_intensity(intensity) {}
 
 /**
+* Destructor
+**/
+
+Scene::~Scene() {}
+
+/**
 * Return the normal vector to the i-th sphere of the scene
 **/
 

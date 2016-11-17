@@ -16,6 +16,7 @@ class Scene
 	public:
 		Scene();
 		Scene(std::vector<Sphere> spheres, Vector light, double intensity);
+		~Scene();
 
 		Vector normal(unsigned int i, Vector point);
 		Vector getColor(unsigned int i) const __attribute__((pure));

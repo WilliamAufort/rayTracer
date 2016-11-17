@@ -13,7 +13,7 @@ class parserArguments
 {
 	public:
 		parserArguments(std::vector<std::string> optionsNames, std::vector<std::string> parametersNames);
-		~parserArguments(){};
+		~parserArguments();
 		bool askHelp();
 
 		size_t nbArguments() const __attribute__((pure));

@@ -19,6 +19,12 @@ Image::Image() : m_height(256), m_width(256), m_red(vector<unsigned char>(256*25
 Image::Image(unsigned int height, unsigned int width) : m_height(height), m_width(width), m_red(vector<unsigned char>(height*width,0)), m_green(vector<unsigned char>(height*width,0)), m_blue(vector<unsigned char>(height*width,0)) {}
 
 /**
+* Destructor
+**/
+
+Image::~Image() {}
+
+/**
 * Is a pixel really inside the image ?
 **/
 

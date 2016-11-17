@@ -15,19 +15,27 @@ class Camera
 	public:
 		// TODO add Scene as a camera member
 		Camera(); // The default camera in the project
-		Camera(unsigned int height, unsigned int width, bool gamma_correction, bool omp);
-		Camera(Vector center, double fov, Vector direction, Vector up, unsigned int height, unsigned int width);
+		Camera(unsigned int height, unsigned int width, Scene s, bool gamma_correction, bool omp);
+		Camera(Vector center, double fov, Vector direction, Vector up, unsigned int height, unsigned int width, Scene s);
+		~Camera();
 
 		Vector getCenter() const __attribute__((pure));
 		unsigned int getHeight() const __attribute__((pure));
 		unsigned int getWidth() const __attribute__((pure));
+
+		void setLookat(Vector position, Vector direction, Vector up);
+		void setFov(double fov);
+		void setImage(double height, double width);
+		void setScene(Scene s);
+		void setGamma(bool gamma_correction);
+		void setParallel(bool omp);
 
 		Ray startingRay(unsigned int i, unsigned int j);
 
 		void setColor(unsigned int i, unsigned int j, unsigned char r, unsigned char g, unsigned char b);
 		void setColor(unsigned int i, unsigned int j, double gray);
 		void setColor(unsigned int i, unsigned int j, Vector color);
-		void plotScene(Scene s);
+		void plotScene();
 		void save(std::string filename);
 
 	private:
@@ -36,8 +44,11 @@ class Camera
 		Vector m_direction;
 		Vector m_up;
 		Image m_image;
+		Scene m_scene;
 		bool m_gamma_correction;
 		bool m_omp;
 };
+
+Camera parseFile(std::string fileName);
 
 #endif

@@ -12,6 +12,7 @@ class Image
 	public:
 		Image();
 		Image(unsigned int height, unsigned int width);
+		~Image();
 
 		bool isValidPixel(unsigned int i, unsigned int j) __attribute__((pure));
 		unsigned int getHeight() const __attribute__((pure));

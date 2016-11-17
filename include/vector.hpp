@@ -13,6 +13,7 @@ class Vector
 		Vector();
 		Vector(double x, double y, double z);
 		Vector(Vector const& u);
+		~Vector() {};
 
 		double getX() const __attribute__((pure));
 		double getY() const __attribute__((pure));

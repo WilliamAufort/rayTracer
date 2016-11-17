@@ -14,17 +14,27 @@ int main(int argc, char* argv[])
 		if (arguments.askHelp())
 		{
 			cout << endl << "Use the following syntax :" << endl;
-			cout << "./rayTracer" << endl;
-			cout << "--output file		Save the image in file" << endl;
+			cout << "./rayTracer file.sc" << endl;
+			cout << "--output=file		Save the image in file" << endl;
 			cout << "--gamma			Use gamma correction" << endl;
 			cout << "--omp				Use OpenMP in a naive way" << endl;
 			cout << "-h / --help		You're currently in the help mode" << endl;
 			return EXIT_FAILURE;
 		}
-		Camera test(500,500,arguments.getOption("-gamma"),arguments.getOption("-omp"));
-		Scene s;
-		test.plotScene(s);
-		test.save(arguments.getParameter("-output","test.bmp"));
+
+		// If no entry file, exit
+		if(arguments.nbArguments()<1)
+		{
+			cout << endl << "Syntax :" << endl;
+			cout << "./raytracer file"<< endl;
+			cout << "Use `./raytracer --help' or `./rapidex -h' for help." << endl;
+			return EXIT_FAILURE;
+		}
+		Camera cam = parseFile(arguments.getArgument(0));
+		cam.setGamma(arguments.getOption("-gamma"));
+		cam.setParallel(arguments.getOption("-omp"));		
+		cam.plotScene();
+		cam.save(arguments.getParameter("-output","test.bmp"));
 	}
-	return 0;
+	return EXIT_SUCCESS;
 }
