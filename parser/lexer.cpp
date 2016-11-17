@@ -7,7 +7,7 @@ namespace sceneParser {
 
 	void Lexer::set_debug(bool b)
 	{
-    	yy_flex_debug = b;
+		yy_flex_debug = b;
 }	}
 
 #ifdef yylex

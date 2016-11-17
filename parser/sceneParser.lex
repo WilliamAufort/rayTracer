@@ -35,37 +35,37 @@ float       -?([0-9]+|[0-9]*\.[0-9]+)
 
 %%
 
-{whitespace}			{/* We ignore */}
+{whitespace}            {/* We ignore */}
 
-"#"						BEGIN(comment);		//
-<comment>[^\n]			break;				//
-<comment>\n				{					// Comments handling
-							BEGIN(INITIAL);	//
-							line_number++;	//
-						}					//
+"#"                     BEGIN(comment);     //
+<comment>[^\n]          break;              //
+<comment>\n             {                   // Comments handling
+                            BEGIN(INITIAL); //
+                            line_number++;  //
+                        }                   //
 
-\n+						{ cout<<"EOL "; line_number++; return(token::EOL); }
-"("						{ cout<<"LPAR "; return(token::LPAR); }
-")"						{ cout<<"RPAR "; return(token::RPAR); }
-","						{ cout<<"SEP "; return(token::SEP); }
+\n+                     { cout<<"EOL "; line_number++; return(token::EOL); }
+"("                     { cout<<"LPAR "; return(token::LPAR); }
+")"                     { cout<<"RPAR "; return(token::RPAR); }
+","                     { cout<<"SEP "; return(token::SEP); }
 
-"Lookat"				{ cout<<"LOOKAT "; return(token::LOOK_AT); }
-"CameraFov"				{ cout<<"CAMERA_FOV "; return(token::CAMERA_FOV); }
-"OutputImage"			{ cout<<"OUTPUT_SIZE "; return(token::OUTPUT_SIZE); }
-"LightSource"			{ cout<<"LIGHT_SOURCE "; return(token::LIGHT_SOURCE); }
+"Lookat"                { cout<<"LOOKAT "; return(token::LOOK_AT); }
+"CameraFov"             { cout<<"CAMERA_FOV "; return(token::CAMERA_FOV); }
+"OutputImage"           { cout<<"OUTPUT_SIZE "; return(token::OUTPUT_SIZE); }
+"LightSource"           { cout<<"LIGHT_SOURCE "; return(token::LIGHT_SOURCE); }
 
-"BeginSphere"			{ cout<<"BEGIN_SPHERE "; return(token::BEGIN_SPHERE); }
-"EndSphere"				{ cout<<"END_SPHERE "; return(token::END_SPHERE); }
-"Center"				{ cout<<"CENTER "; return(token::CENTER); }
-"Radius"				{ cout<<"RADIUS "; return(token::RADIUS); }
-"Color"					{ cout<<"COLOR "; return(token::COLOR); }
+"BeginSphere"           { cout<<"BEGIN_SPHERE "; return(token::BEGIN_SPHERE); }
+"EndSphere"             { cout<<"END_SPHERE "; return(token::END_SPHERE); }
+"Center"                { cout<<"CENTER "; return(token::CENTER); }
+"Radius"                { cout<<"RADIUS "; return(token::RADIUS); }
+"Color"                 { cout<<"COLOR "; return(token::COLOR); }
 
-"BeginMaterial"			{ cout<<"BEGIN_MATERIAL "; return(token::BEGIN_MATERIAL); }
-"EndMaterial"			{ cout<<"END_MATERIAL "; return(token::END_MATERIAL); }
-"Specular"				{ cout<<"SPECULAR "; return(token::SPECULAR); }
-"Transparent"			{ cout<<"TRANSPARENT "; return(token::TRANSPARENT); }
-"Diffuse"				{ cout<<"DIFFUSE "; return(token::DIFFUSE); }
-"Emissive"				{ cout<<"EMISSIVE "; return(token::EMISSIVE); }
+"BeginMaterial"         { cout<<"BEGIN_MATERIAL "; return(token::BEGIN_MATERIAL); }
+"EndMaterial"           { cout<<"END_MATERIAL "; return(token::END_MATERIAL); }
+"Specular"              { cout<<"SPECULAR "; return(token::SPECULAR); }
+"Transparent"           { cout<<"TRANSPARENT "; return(token::TRANSPARENT); }
+"Diffuse"               { cout<<"DIFFUSE "; return(token::DIFFUSE); }
+"Emissive"              { cout<<"EMISSIVE "; return(token::EMISSIVE); }
 
 
 {float}  {

@@ -79,7 +79,7 @@ void Camera::setImage(double height, double width)
 {
 	unsigned int h = static_cast<unsigned int>(height);
 	unsigned int w = static_cast<unsigned int>(width);
-    m_image = Image(h,w);
+	m_image = Image(h,w);
 }
 
 /**

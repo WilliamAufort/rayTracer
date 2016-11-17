@@ -94,7 +94,7 @@ Light:
 
 ObjectList:
  ObjectList Sphere  { std::vector<Sphere>* v = $1; v->push_back(*$2); $$ = v;}
-|					{ $$ = new std::vector<Sphere>();}
+|                   { $$ = new std::vector<Sphere>();}
 ;
 
 Sphere:
@@ -118,24 +118,24 @@ material:
 ;
 
 specular:
-  SPECULAR EOL transparent	{ Material* m = $3; m->setSpecularity(true); $$ = m;}
-| transparent				{ $$ = $1;}
+  SPECULAR EOL transparent  { Material* m = $3; m->setSpecularity(true); $$ = m;}
+| transparent               { $$ = $1;}
 ;
 
 transparent:
   TRANSPARENT FLOAT EOL diffuse { Material* m = $4; m->setTransparency(true,$2); $$ = m;}
-| diffuse						{ $$ = $1;}
+| diffuse                       { $$ = $1;}
 ;
 
 diffuse:
-  DIFFUSE EOL emissive			{ $$ = $3;}
-| DIFFUSE FLOAT EOL emissive	{ $$ = $4;}  // TODO Modify when add diffuse
-| emissive						{ $$ = $1;}
+  DIFFUSE EOL emissive          { $$ = $3;}
+| DIFFUSE FLOAT EOL emissive    { $$ = $4;}  // TODO Modify when add diffuse
+| emissive                      { $$ = $1;}
 ;
 
 emissive:
-  EMISSIVE FLOAT EOL		{ $$ = new Material();}  // Modify when add emissivity
-|							{ $$ = new Material();}
+  EMISSIVE FLOAT EOL        { $$ = new Material();}  // Modify when add emissivity
+|                           { $$ = new Material();}
 ;
 
 %%
