@@ -118,12 +118,12 @@ material:
 ;
 
 specular:
-  SPECULAR EOL transparent  { Material* m = $3; m->setSpecularity(true); $$ = m;}
+  SPECULAR EOL transparent  { Material* m = $3; m->setSpecularity(); $$ = m;}
 | transparent               { $$ = $1;}
 ;
 
 transparent:
-  TRANSPARENT FLOAT EOL diffuse { Material* m = $4; m->setTransparency(true,$2); $$ = m;}
+  TRANSPARENT FLOAT EOL diffuse { Material* m = $4; m->setTransparency($2); $$ = m;}
 | diffuse                       { $$ = $1;}
 ;
 
@@ -134,8 +134,8 @@ diffuse:
 ;
 
 emissive:
-  EMISSIVE FLOAT EOL        { Material* m = new Material(); m->setEmissivity(true,$2); $$ = m;}
-| EMISSIVE EOL              { Material* m = new Material(); m->setEmissivity(true,1); $$ = m;}
+  EMISSIVE FLOAT EOL        { Material* m = new Material(); m->setEmissivity($2); $$ = m;}
+| EMISSIVE EOL              { Material* m = new Material(); m->setEmissivity(1); $$ = m;}
 |                           { $$ = new Material();}
 ;
 

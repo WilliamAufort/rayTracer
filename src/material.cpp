@@ -9,13 +9,26 @@ using namespace std;
 Material::Material() : m_emissive(false), m_rho(0), m_specular(false), m_transparent(false), m_refr_index(1) {}
 
 /**
-* Set the emissivity
+* Set the emissivity coefficient
 **/
 
-void Material::setEmissivity(bool emissive, double rho)
+void Material::setEmissivity(double rho)
 {
-	m_emissive = emissive;
-	m_rho = rho; // TODO Sanity check
+	m_emissive = true;
+	// Sanity checks : rho \in [0,1]
+	if (rho < 0)
+	{
+		cout << "Warning: emissivity coefficient set to the value: " << rho;
+		cout << " < 0, changed to the value 0" << endl;
+		m_rho = 0;
+	}
+	else if (rho > 1)
+	{
+		cout << "Warning: emissivity coefficient set to the value: " << rho;
+		cout << " > 1, changed to the value 1" << endl;
+		m_rho = 1;
+	}
+	else m_rho = rho;
 }
 
 /**
@@ -31,18 +44,18 @@ double Material::getRho() const
 * Set the specularity
 **/
 
-void Material::setSpecularity(bool specular)
+void Material::setSpecularity()
 {
-	m_specular = specular;
+	m_specular = true;
 }
 
 /**
 * Set the transparency
 **/
 
-void Material::setTransparency(bool transparent, double index)
+void Material::setTransparency(double index)
 {
-	m_transparent = transparent;
+	m_transparent = true;
 	m_refr_index = index;
 }
 
@@ -52,7 +65,7 @@ void Material::setTransparency(bool transparent, double index)
 
 bool Material::isEmissive() const
 {
-	return m_emissive; // TODO Not implemented yet
+	return m_emissive;
 }
 
 /**

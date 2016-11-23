@@ -14,9 +14,9 @@ class Material
 		Material();
 		~Material() {};
 
-		void setEmissivity(bool emissive, double rho);
-		void setSpecularity(bool specular);
-		void setTransparency(bool transparent, double index);
+		void setEmissivity(double rho);
+		void setSpecularity();
+		void setTransparency(double index);
 
 		bool isEmissive() const __attribute__((pure));
 		double getRho() const __attribute__((pure));
