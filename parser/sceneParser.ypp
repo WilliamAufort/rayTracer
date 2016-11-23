@@ -134,7 +134,8 @@ diffuse:
 ;
 
 emissive:
-  EMISSIVE FLOAT EOL        { $$ = new Material();}  // Modify when add emissivity
+  EMISSIVE FLOAT EOL        { Material* m = new Material(); m->setEmissivity(true,$2); $$ = m;}
+| EMISSIVE EOL              { Material* m = new Material(); m->setEmissivity(true,1); $$ = m;}
 |                           { $$ = new Material();}
 ;
 

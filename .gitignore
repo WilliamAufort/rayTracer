@@ -7,5 +7,15 @@ rayTracer
 # Backup files
 *~
 
+# Parser Files
+parser/location.hh
+parser/position.hh
+parser/sceneLexer.cpp
+parser/sceneParser.cpp
+parser/sceneParser.hpp
+parser/sceneParser.output
+parser/stack.hh
+
 # Outputs
+images/
 *.bmp

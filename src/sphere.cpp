@@ -61,6 +61,24 @@ Vector Sphere::normal(Vector point) const
 }
 
 /**
+* Is the sphere emissive ?
+**/
+
+bool Sphere::isEmissive() const
+{
+	return m_material.isEmissive();
+}
+
+/**
+* Return the emissivity coefficient of the sphere
+**/
+
+double Sphere::getRho() const
+{
+	return m_material.getRho();
+}
+
+/**
 * Is the sphere specular?
 **/
 

@@ -21,6 +21,9 @@ class Scene
 		Vector normal(unsigned int i, Vector point);
 		Vector getColor(unsigned int i) const __attribute__((pure));
 
+		bool isEmissive(unsigned int i) const __attribute__((pure));
+		double getRho(unsigned int i) const __attribute__((pure));
+
 		bool isSpecular(unsigned int i) const __attribute__((pure));
 		Ray reflect(Ray r, Vector intersect, unsigned int i) const;
 

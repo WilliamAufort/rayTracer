@@ -41,6 +41,24 @@ Vector Scene::getColor(unsigned int i) const
 }
 
 /**
+* Is the i-th sphere of the scene emissive ?
+**/
+
+bool Scene::isEmissive(unsigned int i) const
+{
+	return (m_spheres[i]).isEmissive();
+}
+
+/**
+* Get the emissivity coefficient of the i-th sphere
+**/
+
+double Scene::getRho(unsigned int i) const
+{
+	return (m_spheres[i]).getRho();
+}
+
+/**
 * Is the i-th sphere of the scene specular?
 **/
 
@@ -145,9 +163,12 @@ Vector Scene::getColor(Ray r, unsigned int nb_rebounds, bool allowShadows)
 				if (refrac.first) {
 					color += getColor(refrac.second,nb_rebounds-1,false);
 			}	}
-			double scal_prod = scalarProd(normalize(m_light - intersect_pt), normalize(normal(t.first,intersect_pt)));
-			double factor = 255 * scal_prod * m_intensity / squareNorm(m_light - intersect_pt);
-			color += factor * getColor(t.first);
+			if (isEmissive(t.first))
+			{
+				double scal_prod = scalarProd(normalize(m_light - intersect_pt), normalize(normal(t.first,intersect_pt)));
+				double factor = 255 * scal_prod * m_intensity / squareNorm(m_light - intersect_pt) * getRho(t.first) ;
+				color += factor * getColor(t.first);
+			}
 		}
 	}
 	return color;

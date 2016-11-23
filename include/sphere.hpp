@@ -21,6 +21,9 @@ class Sphere
 		double computeIntersect(Ray ray) const;
 		Vector normal(Vector point) const;
 
+		bool isEmissive() const __attribute__((pure));
+		double getRho() const __attribute__((pure));
+
 		bool isSpecular() const __attribute__((pure));
 		Ray reflect(Ray r, Vector intersect) const;
 

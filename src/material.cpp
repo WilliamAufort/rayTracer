@@ -6,7 +6,26 @@ using namespace std;
 * A only diffuse material
 **/
 
-Material::Material() : m_specular(false), m_transparent(false), m_refr_index(1) {}
+Material::Material() : m_emissive(false), m_rho(0), m_specular(false), m_transparent(false), m_refr_index(1) {}
+
+/**
+* Set the emissivity
+**/
+
+void Material::setEmissivity(bool emissive, double rho)
+{
+	m_emissive = emissive;
+	m_rho = rho; // TODO Sanity check
+}
+
+/**
+* Return the emissivity coefficient
+**/
+
+double Material::getRho() const
+{
+	return m_rho;
+}
 
 /**
 * Set the specularity
@@ -25,6 +44,15 @@ void Material::setTransparency(bool transparent, double index)
 {
 	m_transparent = transparent;
 	m_refr_index = index;
+}
+
+/**
+* Is the material emissive ?
+**/
+
+bool Material::isEmissive() const
+{
+	return m_emissive; // TODO Not implemented yet
 }
 
 /**
