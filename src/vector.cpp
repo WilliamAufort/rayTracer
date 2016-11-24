@@ -222,6 +222,20 @@ Vector normalize(Vector const& u)
 }
 
 /**
+* Compute a vector orthogonal to the input vector
+**/
+
+Vector someOrthogonal(Vector const& u)
+{
+	if (not closeEnough(u.getX(),0))
+	{
+		Vector v(u.getY(), -u.getX(),0);
+		return normalize(v);
+	}
+	else return Vector(1,0,0);
+}
+
+/**
 * Print a vector
 **/
 

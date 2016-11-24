@@ -44,6 +44,8 @@ double norm(Vector const& u) __attribute__((pure));
 double squareNorm(Vector const& u) __attribute__((pure));
 Vector normalize(Vector const& u) __attribute__((pure));
 
+Vector someOrthogonal(Vector const& u) __attribute__((pure));
+
 std::ostream& operator<<(std::ostream& flux, Vector const& u);
 
 #endif

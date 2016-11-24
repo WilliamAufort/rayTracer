@@ -17,7 +17,7 @@ class Material
 		void setEmissivity(double rho);
 		void setSpecularity();
 		void setTransparency(double index);
-		void setDiffuse();
+		void setDiffuse(double coeff);
 
 		bool isEmissive() const __attribute__((pure));
 		double getRho() const __attribute__((pure));
@@ -28,6 +28,7 @@ class Material
 		double getRefrIndex() const __attribute__((pure));
 
 		bool isDiffuse() const __attribute__((pure));
+		double getDiffuseCoeff() const __attribute__((pure));
 
 	private:
 		bool m_emissive;
@@ -36,6 +37,7 @@ class Material
 		bool m_transparent;
 		double m_refr_index;
 		bool m_diffuse;
+		double m_diffuse_coeff;
 };
 
 #endif
