@@ -6,7 +6,7 @@ using namespace std;
 * A only diffuse material
 **/
 
-Material::Material() : m_emissive(false), m_rho(0), m_specular(false), m_transparent(false), m_refr_index(1) {}
+Material::Material() : m_emissive(false), m_rho(0), m_specular(false), m_transparent(false), m_refr_index(1), m_diffuse(false) {}
 
 /**
 * Set the emissivity coefficient
@@ -15,7 +15,7 @@ Material::Material() : m_emissive(false), m_rho(0), m_specular(false), m_transpa
 void Material::setEmissivity(double rho)
 {
 	m_emissive = true;
-	// Sanity checks : rho \in [0,1]
+	// Sanity checks : rho must be in [0,1]
 	if (rho < 0)
 	{
 		cout << "Warning: emissivity coefficient set to the value: " << rho;
@@ -29,15 +29,6 @@ void Material::setEmissivity(double rho)
 		m_rho = 1;
 	}
 	else m_rho = rho;
-}
-
-/**
-* Return the emissivity coefficient
-**/
-
-double Material::getRho() const
-{
-	return m_rho;
 }
 
 /**
@@ -56,7 +47,23 @@ void Material::setSpecularity()
 void Material::setTransparency(double index)
 {
 	m_transparent = true;
-	m_refr_index = index;
+	// Sanity check:  index must be >= 1
+    if (index < 1)
+	{
+		cout << "Warning: refractive set to the value: " << index;
+		cout << " < 1, changed to the value 1" << endl;
+		m_refr_index = 1;
+	}
+	else m_refr_index = index;
+}
+
+/**
+* Set the diffusivity
+**/
+
+void Material::setDiffuse()
+{
+	m_diffuse = true;
 }
 
 /**
@@ -66,6 +73,15 @@ void Material::setTransparency(double index)
 bool Material::isEmissive() const
 {
 	return m_emissive;
+}
+
+/**
+* Return the emissivity coefficient
+**/
+
+double Material::getRho() const
+{
+	return m_rho;
 }
 
 /**
@@ -93,4 +109,13 @@ bool Material::isTransparent() const
 double Material::getRefrIndex() const
 {
 	return m_refr_index;
+}
+
+/**
+* Is the material diffuse ?
+**/
+
+bool Material::isDiffuse() const
+{
+	return m_diffuse;
 }

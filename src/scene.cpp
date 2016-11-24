@@ -95,6 +95,15 @@ pair<bool,Ray> Scene::refract(Ray r, Vector intersect, unsigned int i) const
 }
 
 /**
+* Is the i-th sphere diffuse ?
+**/
+
+bool Scene::isDiffuse(unsigned int i) const
+{
+	return (m_spheres[i]).isDiffuse();
+}
+
+/**
 * Compute the intersection and the intersected primitive (if they exist) with a given ray
 **/
 
@@ -163,6 +172,10 @@ Vector Scene::getColor(Ray r, unsigned int nb_rebounds, bool allowShadows)
 				if (refrac.first) {
 					color += getColor(refrac.second,nb_rebounds-1,false);
 			}	}
+			if (isDiffuse(t.first))
+			{
+				// TODO Complete
+			}
 			if (isEmissive(t.first))
 			{
 				double scal_prod = scalarProd(normalize(m_light - intersect_pt), normalize(normal(t.first,intersect_pt)));

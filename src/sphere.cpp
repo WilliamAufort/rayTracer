@@ -132,3 +132,12 @@ pair<bool,Ray> Sphere::refract(Ray r, Vector intersect) const
 		Vector u = (ratio * i) - ((ratio * prod + sqrt(radicand)) * n);
 		return make_pair(true,Ray(intersect,u));
 }	}
+
+/**
+* Is the sphere diffuse ?
+**/
+
+bool Sphere::isDiffuse() const
+{
+	return m_material.isDiffuse();
+}

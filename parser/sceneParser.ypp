@@ -128,8 +128,8 @@ transparent:
 ;
 
 diffuse:
-  DIFFUSE EOL emissive          { $$ = $3;}
-| DIFFUSE FLOAT EOL emissive    { $$ = $4;}  // TODO Modify when add diffuse
+  DIFFUSE EOL emissive          { Material* m = $3; m->setDiffuse(); $$ = m;}
+| DIFFUSE FLOAT EOL emissive    { Material* m = $4; m->setDiffuse(); $$ = m;}  // TODO Modify when add diffuse
 | emissive                      { $$ = $1;}
 ;
 

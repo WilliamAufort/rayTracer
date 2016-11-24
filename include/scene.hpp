@@ -27,6 +27,8 @@ class Scene
 		bool isSpecular(unsigned int i) const __attribute__((pure));
 		Ray reflect(Ray r, Vector intersect, unsigned int i) const;
 
+		bool isDiffuse(unsigned int i) const __attribute__((pure));
+
 		bool isTransparent(unsigned int i) const __attribute__((pure));
 		std::pair<bool,Ray> refract(Ray r, Vector intersect, unsigned int i) const;
 
