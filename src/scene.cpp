@@ -8,13 +8,13 @@ using namespace std;
 * Empty scene
 **/
 
-Scene::Scene() : m_spheres(vector<Sphere>()), m_light(Vector()), m_intensity(0) {}
+Scene::Scene() : m_spheres(vector<Sphere>()), m_light(Vector()), m_intensity(0), m_eng(RandomEngine()) {}
 
 /**
 * The scene with all the parameters given by the user
 **/
 	
-Scene::Scene(vector<Sphere> spheres, Vector light, double intensity) : m_spheres(spheres), m_light(light), m_intensity(intensity) {}
+Scene::Scene(vector<Sphere> spheres, Vector light, double intensity) : m_spheres(spheres), m_light(light), m_intensity(intensity), m_eng(RandomEngine()) {}
 
 /**
 * Destructor
@@ -104,6 +104,15 @@ bool Scene::isDiffuse(unsigned int i) const
 }
 
 /**
+* Get the diffuse coefficient of the i-th sphere
+**/
+
+double Scene::getDiffuseCoeff(unsigned int i) const
+{
+	return (m_spheres[i]).getDiffuseCoeff();
+}
+
+/**
 * Compute the intersection and the intersected primitive (if they exist) with a given ray
 **/
 
@@ -162,27 +171,27 @@ Vector Scene::getColor(Ray r, unsigned int nb_rebounds, bool allowShadows)
 		Vector intersect_pt = r.getIntersect(t.second);
 		if (not allowShadows or not isShadowed(intersect_pt))
 		{
-			if (isSpecular(t.first))
+			if (isSpecular(t.first) and (nb_rebounds != 0))
 			{
-				color += getColor(reflect(r,intersect_pt,t.first),nb_rebounds-1,false);
+				color += getColor(reflect(r,intersect_pt,t.first),nb_rebounds-1,allowShadows);
 			}
-			if (isTransparent(t.first))
+			if (isTransparent(t.first) and (nb_rebounds != 0))
 			{
 				pair<bool,Ray> refrac = refract(r,intersect_pt,t.first);
 				if (refrac.first) {
 					color += getColor(refrac.second,nb_rebounds-1,false);
 			}	}
-			if (isDiffuse(t.first))
+			if (isDiffuse(t.first) and (nb_rebounds != 0))
 			{
-				// TODO Complete
+				Vector sample = m_eng.sampleHemisphere(normal(t.first,intersect_pt));
+				Ray random_ray(intersect_pt,sample);
+				color += getDiffuseCoeff(t.first) * getColor(random_ray,nb_rebounds-1,false);
 			}
 			if (isEmissive(t.first))
 			{
 				double scal_prod = scalarProd(normalize(m_light - intersect_pt), normalize(normal(t.first,intersect_pt)));
 				double factor = 255 * scal_prod * m_intensity / squareNorm(m_light - intersect_pt) * getRho(t.first) ;
 				color += factor * getColor(t.first);
-			}
-		}
-	}
+	}	}	}
 	return color;
 }

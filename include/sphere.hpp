@@ -31,6 +31,7 @@ class Sphere
 		std::pair<bool,Ray> refract(Ray r, Vector intersect) const;
 
 		bool isDiffuse() const __attribute__((pure));
+		double getDiffuseCoeff() const  __attribute__((pure));
 
 	private:
 		Vector m_center;

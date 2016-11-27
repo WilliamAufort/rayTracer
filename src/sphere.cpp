@@ -141,3 +141,12 @@ bool Sphere::isDiffuse() const
 {
 	return m_material.isDiffuse();
 }
+
+/**
+* Get the diffuse coefficient of the sphere
+**/
+
+double Sphere::getDiffuseCoeff() const
+{
+	return m_material.getDiffuseCoeff();
+}

@@ -15,10 +15,11 @@ int main(int argc, char* argv[])
 		{
 			cout << endl << "Use the following syntax :" << endl;
 			cout << "./rayTracer file.sc" << endl;
-			cout << "--output=file		Save the image in file" << endl;
-			cout << "--gamma			Use gamma correction" << endl;
-			cout << "--omp				Use OpenMP in a naive way" << endl;
-			cout << "-h / --help		You're currently in the help mode" << endl;
+			cout << "--output=file      Save the image in file" << endl;
+			cout << "--gamma            Use gamma correction" << endl;
+			cout << "--omp              Use OpenMP in a naive way" << endl;
+			cout << "--rays=nb          Use nb rays per pixel (default 1)" << endl;
+			cout << "-h / --help        You're currently in the help mode" << endl;
 			return EXIT_FAILURE;
 		}
 
@@ -31,8 +32,10 @@ int main(int argc, char* argv[])
 			return EXIT_FAILURE;
 		}
 		Camera cam = parseFile(arguments.getArgument(0));
+		// Set the options
 		cam.setGamma(arguments.getOption("-gamma"));
-		cam.setParallel(arguments.getOption("-omp"));		
+		cam.setParallel(arguments.getOption("-omp"));
+		cam.setNbRays(static_cast<unsigned int>(stoi(arguments.getParameter("-rays","1"))));
 		cam.plotScene();
 		cam.save(arguments.getParameter("-output","test.bmp"));
 	}

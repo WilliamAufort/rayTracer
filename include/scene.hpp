@@ -4,6 +4,7 @@
 #include "vector.hpp"
 #include "sphere.hpp"
 #include "ray.hpp"
+#include "randomEngine.hpp"
 #include <vector>
 #include <utility>
 
@@ -28,6 +29,7 @@ class Scene
 		Ray reflect(Ray r, Vector intersect, unsigned int i) const;
 
 		bool isDiffuse(unsigned int i) const __attribute__((pure));
+		double getDiffuseCoeff(unsigned int i) const __attribute__((pure));
 
 		bool isTransparent(unsigned int i) const __attribute__((pure));
 		std::pair<bool,Ray> refract(Ray r, Vector intersect, unsigned int i) const;
@@ -42,6 +44,7 @@ class Scene
 		std::vector<Sphere> m_spheres;
 		Vector m_light;
 		double m_intensity;
+		RandomEngine m_eng;
 };
 
 #endif

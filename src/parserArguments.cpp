@@ -123,7 +123,7 @@ string parserArguments::getParameter(string name, string def) const
 
 vector<string> parserArguments::getOptionsNames()
 {
-	vector<string> liste(3);
+	vector<string> liste(2);
 	liste[0] = "-gamma";
 	liste[1] = "-omp";
 	return liste;
@@ -135,7 +135,8 @@ vector<string> parserArguments::getOptionsNames()
 
 vector<string> parserArguments::getParametersNames()
 {
-	vector<string> liste(1);
+	vector<string> liste(2);
 	liste[0] = "-output";
+	liste[1] = "-rays";
 	return liste;
 }

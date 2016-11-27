@@ -11,7 +11,6 @@ Vector RandomEngine::sampleHemisphere(Vector n)
 	Vector i = someOrthogonal(n);
 	Vector j = crossProd(n,i);
 	// (i,j,n) is thus an orthonormal set oriented along n
-	cout << "Repère (" << i << "," << j << "," << n << ")" << endl;
 	double r1 = m_distrib(m_engine);
 	double r2 = m_distrib(m_engine);
 	double s = sqrt(1-r2);

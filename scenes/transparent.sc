@@ -15,7 +15,7 @@ BeginSphere
 	Color (0,0,0)
 	BeginMaterial
 		Transparent 3.5
-		Diffuse
+		Emissive
 	EndMaterial
 EndSphere
 
@@ -25,7 +25,7 @@ BeginSphere
 	Radius 940
 	Color (1,0.784,0.576)
 	BeginMaterial
-		Diffuse
+		Emissive
 	EndMaterial
 EndSphere
 
@@ -35,7 +35,7 @@ BeginSphere
 	Radius 940
 	Color (0,1,0)
 	BeginMaterial
-		Diffuse
+		Emissive
 	EndMaterial
 EndSphere
 
@@ -45,7 +45,7 @@ BeginSphere
 	Radius 940
 	Color (1,0,0)
 	BeginMaterial
-		Diffuse
+		Emissive
 	EndMaterial
 EndSphere
 
@@ -55,7 +55,7 @@ BeginSphere
 	Radius 990
 	Color (0,0,1)
 	BeginMaterial
-		Diffuse
+		Emissive
 	EndMaterial
 EndSphere
 
@@ -65,7 +65,7 @@ BeginSphere
 	Radius 950
 	Color (1,1,0)
 	BeginMaterial
-		Diffuse
+		Emissive
 	EndMaterial
 EndSphere
 
@@ -75,6 +75,6 @@ BeginSphere
 	Radius 950
 	Color (1,1,1)
 	BeginMaterial
-		Diffuse
+		Emissive
 	EndMaterial
 EndSphere

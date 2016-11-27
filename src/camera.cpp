@@ -12,7 +12,7 @@ using namespace std;
 * Setup camera
 **/
 
-Camera::Camera() : m_center(Vector()), m_fov(0), m_direction(Vector()), m_up(Vector()), m_image(Image()), m_scene(Scene()), m_gamma_correction(false), m_omp(false) {}
+Camera::Camera() : m_center(Vector()), m_fov(0), m_direction(Vector()), m_up(Vector()), m_image(Image()), m_scene(Scene()), m_gamma_correction(false), m_omp(false), m_nb_rays(1) {}
 
 Camera::~Camera() {}
 
@@ -83,14 +83,31 @@ void Camera::setScene(Scene s)
 	m_scene = s;
 }
 
+/**
+* Set the gamma correction option
+**/
+
 void Camera::setGamma(bool gamma_correction)
 {
 	m_gamma_correction = gamma_correction;
 }
 
+/**
+* Set the Omp parallel option
+**/
+
 void Camera::setParallel(bool omp)
 {
 	m_omp = omp;
+}
+
+/**
+* Set the chosen number of rays per pixel
+**/
+
+void Camera::setNbRays(unsigned int nb_rays)
+{
+	m_nb_rays = nb_rays;
 }
 
 /**
@@ -132,17 +149,21 @@ void Camera::plotScene()
 			for(unsigned int j = 0; j < m_image.getHeight(); j++)
 			{
 				Ray r = startingRay(i,j);
-				Vector color = m_scene.getColor(r);
-				setColor(i,j,color);
+				Vector color;
+				for(unsigned int n = 0; n < m_nb_rays; n++)
+					color += m_scene.getColor(r);
+				setColor(i,j,(1/static_cast<double>(m_nb_rays))*color);
 	}		}
 	else
 	{
-		for(unsigned int i = 0; i < m_image.getWidth(); i++)
+		for(unsigned int i = 0; i < m_image.getHeight(); i++)
 			for(unsigned int j = 0; j < m_image.getHeight(); j++)
 			{
 				Ray r = startingRay(i,j);
-				Vector color = m_scene.getColor(r);
-				setColor(i,j,color);
+				Vector color;
+				for(unsigned int n = 0; n < m_nb_rays; n++)
+					color += m_scene.getColor(r);
+				setColor(i,j,(1/static_cast<double>(m_nb_rays))*color);
 }	}		}
 
 /**

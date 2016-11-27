@@ -24,8 +24,10 @@ class Camera
 		void setFov(double fov);
 		void setImage(double height, double width);
 		void setScene(Scene s);
+
 		void setGamma(bool gamma_correction);
 		void setParallel(bool omp);
+		void setNbRays(unsigned int nb_rays);
 
 		Ray startingRay(unsigned int i, unsigned int j);
 
@@ -42,8 +44,11 @@ class Camera
 		Vector m_up;
 		Image m_image;
 		Scene m_scene;
+
+		// Options
 		bool m_gamma_correction;
 		bool m_omp;
+		unsigned int m_nb_rays;
 };
 
 Camera parseFile(std::string fileName);
