@@ -159,39 +159,37 @@ bool Scene::isShadowed(Vector point) const
 
 Vector Scene::getColor(Ray r)
 {
-	return getColor(r,max_rebounds,true);
+	return getColor(r,max_rebounds);
 }
 
-Vector Scene::getColor(Ray r, unsigned int nb_rebounds, bool allowShadows)
+Vector Scene::getColor(Ray r, unsigned int nb_rebounds)
 {
 	Vector color; // black
 	pair<unsigned int, double> t = computeIntersect(r);
 	if (not closeEnough(t.second,-1))
 	{
 		Vector intersect_pt = r.getIntersect(t.second);
-		if (not allowShadows or not isShadowed(intersect_pt))
+		if (isSpecular(t.first) and (nb_rebounds != 0))
 		{
-			if (isSpecular(t.first) and (nb_rebounds != 0))
-			{
-				color += getColor(reflect(r,intersect_pt,t.first),nb_rebounds-1,allowShadows);
-			}
-			if (isTransparent(t.first) and (nb_rebounds != 0))
-			{
-				pair<bool,Ray> refrac = refract(r,intersect_pt,t.first);
-				if (refrac.first) {
-					color += getColor(refrac.second,nb_rebounds-1,false);
-			}	}
-			if (isDiffuse(t.first) and (nb_rebounds != 0))
-			{
-				Vector sample = m_eng.sampleHemisphere(normal(t.first,intersect_pt));
-				Ray random_ray(intersect_pt,sample);
-				color += getDiffuseCoeff(t.first) * getColor(random_ray,nb_rebounds-1,false);
-			}
-			if (isEmissive(t.first))
-			{
-				double scal_prod = scalarProd(normalize(m_light - intersect_pt), normalize(normal(t.first,intersect_pt)));
-				double factor = 255 * scal_prod * m_intensity / squareNorm(m_light - intersect_pt) * getRho(t.first) ;
-				color += factor * getColor(t.first);
-	}	}	}
+			color += getColor(reflect(r,intersect_pt,t.first),nb_rebounds-1);
+		}
+		if (isTransparent(t.first) and (nb_rebounds != 0))
+		{
+			pair<bool,Ray> refrac = refract(r,intersect_pt,t.first);
+			if (refrac.first) {
+				color += getColor(refrac.second,nb_rebounds-1);
+		}	}
+		if (isDiffuse(t.first) and (nb_rebounds != 0))
+		{
+			Vector sample = m_eng.sampleHemisphere(normal(t.first,intersect_pt));
+			Ray random_ray(intersect_pt,sample);
+			color += getDiffuseCoeff(t.first) * getColor(random_ray,nb_rebounds-1);
+		}
+		if (isEmissive(t.first) and not isShadowed(intersect_pt))
+		{
+			double scal_prod = scalarProd(normalize(m_light - intersect_pt), normalize(normal(t.first,intersect_pt)));
+			double factor = 255 * scal_prod * m_intensity / squareNorm(m_light - intersect_pt) * getRho(t.first) ;
+			color += factor * getColor(t.first);
+	}	}
 	return color;
 }

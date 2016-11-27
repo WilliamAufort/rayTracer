@@ -38,7 +38,7 @@ class Scene
 		bool isShadowed(Vector point) const;
 
 		Vector getColor(Ray r);
-		Vector getColor(Ray r, unsigned int nb_rebounds, bool allowShadows);
+		Vector getColor(Ray r, unsigned int nb_rebounds);
 
 	private:
 		std::vector<Sphere> m_spheres;
