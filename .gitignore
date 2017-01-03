@@ -19,3 +19,11 @@ parser/stack.hh
 # Outputs
 images/
 *.bmp
+
+# LaTeX
+*.aux
+*.log
+*.ps
+*.toc
+*.dvi
+*.pdf
