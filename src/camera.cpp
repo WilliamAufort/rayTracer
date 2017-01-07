@@ -156,7 +156,7 @@ void Camera::plotScene()
 	}		}
 	else
 	{
-		for(unsigned int i = 0; i < m_image.getHeight(); i++)
+		for(unsigned int i = 0; i < m_image.getWidth(); i++)
 			for(unsigned int j = 0; j < m_image.getHeight(); j++)
 			{
 				Ray r = startingRay(i,j);

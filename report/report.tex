@@ -6,6 +6,10 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{hyperref} % Lien url
+\usepackage{color}
+\usepackage{listings} % Code
+\usepackage[margin=2cm]{geometry}
 
 \title{Rapport projet CR11 : Lanceur de rayons}
 \author{
@@ -18,6 +22,65 @@
 
 \maketitle
 
+\section*{Introduction}
+
+Ce rapport présente mon travail sur le projet du cours CR11 "Mathematical models for image synthesis". L'objectif de ce projet était d'implémenter un lanceur de rayons avec des fonctionnalités simples.
+
 \tableofcontents
+
+\section{Implémentation}
+
+Je détaille dans cette section les aspects liés à mon implémentation de l'algorithme de Raytracing. Les personnes intéressées peuvent trouver la totalité du projet sur ma page Github \footnote{\url{https://github.com/WilliamAufort/rayTracer}}.
+
+\subsection{Détail des fonctionnalités}
+
+J'ai choisi de suivre le document fourni par Nicolas Bonneel pour l'avancement du projet. J'ai implémenté successivement :
+\begin{itemize}
+  \item la version sommaire de l'algorithme : routines d'intersection, gestion simple des surfaces diffuse, de la couleur et des ombres, déplacement de la caméra;
+  \item la gestion des surfaces spéculaires : où on réfléchit juste le rayon issu de la caméra;
+  \item la correction gamma : afin de corriger l'intensité lumineuse affichée à l'écran;
+  \item une mesure du temps d'éxécution : réellement utilisée quand le BRDF diffus a été implémenté;
+  \item la gestion des surfaces transparentes : là il a fallu faire plus attention (voir après);
+  \item un parseur pour gérer les scènes et un autre pour les arguments du programme (voir partie suivante);
+  \item la gestion de l'éclairage indirecte via le BRDF diffus, ainsi qu'une parallélisation simple via OpenMP.
+\end{itemize}
+
+Ainsi toutes les fonctionnalités minimales requises dans le descriptif du projet ont été implémentées.
+
+Concernant le code à proprement parler, il n'y a rien de surprenant à commenter. J'ai choisi de séparer mon code en différentes classes à chaque fois qu'une nouvelle entitée apparaît (image, sphère, scène, vecteurs, rayons, matériau...). La classe principale est la classe \texttt{Camera} qui contient toutes les données nécessaires pour pouvoir afficher une scène : détail de la scène, configuration de la caméra, image où sauvegarder, options du programme... Le parser pour la scène est dans un dossier séparé, mais pas le parser d'arguments.
+
+\subsection{Format de fichier de scène}
+
+Comme dit précédemment, à la moitié du projet, j'ai décidé de construire un parser de scènes, pour plusieurs raisons. Les scènes que j'étudiais devenaient pénibles à modifier directement dans le code. De plus, à chaque modification de la scène, il fallait tout recompiler, ce qui n'était vraiment pas pratique. Enfin c'était indispensable d'un point de vue utilisateur sur le rendu final.
+
+Je me suis inspiré d'un format de fichier existant, portant l'extension LXS, dont une description détaillée est fournie sur ce site \footnote{\url{http://www.luxrender.net/wiki/Scene_file_format}}. L'utilisateur fournit d'abord des informations générales (orientation et champ de vue de la caméra, position de la lumière), puis ensuite les différents éléments composants la scène observée. Pour notre lanceur de rayons simplistes, les composants atomique sont des sphères, dont l'utilisateur donne les éléments caractéristiques : centre, rayon, couleur et matériau. Un exemple de fichier de scène est donné ci-dessous.
+
+\lstinputlisting{../scenes/one_sphere.sc}
+
+Certaines options ne sont pas incluses dans ce fichier, car elles ne relèvent pas de la scène. Il s'agit de la correction gamma, de la parallélisation, et du choix du nombre de rayons à lancer par pixel.
+
+\section{Analyse}
+
+\subsection{Vérification du programme}
+
+Afin de contrôler mon programme, je me suis beaucoup basé sur les différentes illustrations du document fourni avec le projet. Le résultat devait ressembler à ce qui figurait sur les illustrations. Cette technique devint cependant de plus en plus limité car le nombre de paramètres ayant changé augmenta avec l'avancement du projet (intensité des lumières, corrections éventuelles, rapprochement des objets). Certains paramètres n'étaient quant à eux pas fournis, notamment les coefficients de réflexion et de réfraction. Un dossier de scènes fournit dans le projet permet de vérifier que les images obtenues avec le programme sont conformes aux images du document, dans les différents cas rencontrés (surfaces réfléchissantes, transparentes et diffuses).
+
+J'ai pas fait d'expérience avec des statistiques, car il est difficile de dire quelles gradeurs statistiques évaluer sur un tel projet, et surtout par rapport à quelle référence on effectue cette évaluation. La seule donnée chiffrée que l'on peut étudiée est le temps d'éxécution, et à travers mes différents essais, j'ai remarqué que la version parallèle devient plus rapide dès que le nombre de rayons lancés est suffisant, mais avec un seul rayon lancé, la version sans parallélisme est plus rapide. Ceci est du au fait que mon utilisation d'OpenMP dans le programme est très rudimentaire, et donc ne permet pas un contrôle précis.
+
+\subsection{Difficultés rencontrées}
+
+Je détaille dans cette partie les difficultés principales que j'ai rencontrées, hormis le fait que coder me prend énormément de temps.
+
+\subsubsection{Gestion des racines carrées}
+
+Un des enjeux en terme de complexité dans ce projet était la gestion des calculs de racines carrées. En effet, beaucoup d'opérations mathématiques (calculs de distance, des intersections, gestion de la transparence, normalisation des vecteurs!) nécessitent cette opération mais ne sont quelques fois pas nécessaires. Par exemple, beaucoup de calculs de distances sont en fait utilisés pour tester si celle-ci est trop importante, on peut alors se satisfaire d'un calcul de distance au carré. De la même manière, beaucoup de normalisation de vecteurs étaient au début du projet inutiles, car les vecteurs servaient essentiellement à obtenir des directions (rayons lancés ou réfléchis). Mais la normalisation est devenue incontournable avec les BRDF, où il fallait générer un rayon uniformément distribué dans une demi-sphère : dans ce cas la normalisation des vecteurs de la base utilisée était incontournable. En revanche, pour les calculs dans le cas transparent, j'ai passé beaucoup de temps à réfléchir à un moyen d'éviter des calculs de racines et de normalisations de vecteurs, mais finalement la solution donnée dans le document semblait être la plus satisfaisante.
+
+\subsubsection{Eclairage indirect et ombres portées}
+
+Mon autre difficulté fut pour la gestion conjointe de l'éclairage indirect et des ombres portées. Mon problème était de savoir à quel moment du processus de rebond détecter si un point était visible depuis la lumière, notamment par rapport au nombre de rebonds. La réponse que j'ai apporté est de le faire dès que l'on arrive sur une surface émissive, indépendamment du nombre de rebonds, qui de toute façon n'est plus considéré dans ce cas.
+
+\subsection{Travail à poursuivre}
+
+Mon travail sur ce projet s'est étalé sur toute la durée du semestre, mais l'intensification du travail vers la fin du semestre et les différents problèmes que j'ai rencontré ne m'a pas permis d'aller plus loin dans les fonctionnalités à implémenter. Néanmoins, le document fourni pour le projet est suffisamment détaillé pour me permettre d'aller plus loin dans ce sens. D'autre part, quelques correctifs mineurs sur le parser devront être fait : la gestion des commentaires est très limitée, et on ne peut choisir l'ordre des matériaux pour une sphère. Enfin, l'utilisation d'un format de scène permettrait facilement d'incorporer un maillage (via, par exemple, le nom du fichier où trouver le maillage), qui est l'étape suivante importante dans le développement de ce projet.
 
 \end{document}
