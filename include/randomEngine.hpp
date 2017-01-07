@@ -4,6 +4,10 @@
 #include <random>
 #include "vector.hpp"
 
+/**
+* A class for all random functions calls
+**/
+
 class RandomEngine
 {
 	public:

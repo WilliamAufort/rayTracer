@@ -41,7 +41,7 @@ vector<double> discriminant(double a, double b, double c)
 	double delta = b * b - 4 * a * c;
 	if (closeEnough(delta,0))
 		solutions.push_back(-b/(2*a));
-	else if (isNonNegative(delta)) // TODO Check a = 0
+	else if (isNonNegative(delta))
 	{
 		double small_delta = sqrt(delta);
 		solutions.push_back((- b - small_delta)/(2*a));

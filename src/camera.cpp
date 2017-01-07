@@ -3,7 +3,6 @@
 #include "../parser/driver.h"
 #include "../include/parseError.hpp"
 #include <cmath>
-#include <iostream> // TODO For debug only
 #include <omp.h>
 
 using namespace std;

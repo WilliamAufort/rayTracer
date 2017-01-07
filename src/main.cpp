@@ -35,11 +35,14 @@ int main(int argc, char* argv[])
 		return EXIT_FAILURE;
 	}
 
+	// Parse
 	Camera cam = parseFile(arguments.getArgument(0));
+
 	// Set the options
 	cam.setGamma(arguments.getOption("-gamma"));
 	cam.setParallel(arguments.getOption("-omp"));
 	cam.setNbRays(static_cast<unsigned int>(stoi(arguments.getParameter("-rays","1"))));
+
 	// And run !
 	cam.plotScene();
 	cam.save(arguments.getParameter("-output","test.bmp"));
@@ -47,7 +50,7 @@ int main(int argc, char* argv[])
 	// Time measurement
 	gettimeofday(&end, NULL);
 	double time = (static_cast<double>((end.tv_sec  - start.tv_sec) * 1000000u) + static_cast<double>(end.tv_usec - start.tv_usec)) / 1.e6;
-	cout << "New executution time : " << time << endl;
+	cout << "Executution time : " << time << endl;
 
 	return EXIT_SUCCESS;
 }

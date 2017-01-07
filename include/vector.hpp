@@ -37,7 +37,6 @@ Vector operator+(Vector const& u, Vector const& v) __attribute__((pure));
 Vector operator-(Vector const& u, Vector const& v) __attribute__((pure));
 Vector operator*(double lambda, Vector const& u) __attribute__((pure));
 
-Vector prodByCoord(Vector const& u, Vector const& v) __attribute__((pure));
 double scalarProd(Vector const& u, Vector const& v)  __attribute__((pure));
 Vector crossProd(Vector const& u, Vector const& v) __attribute__((pure));
 double norm(Vector const& u) __attribute__((pure));

@@ -162,6 +162,11 @@ Vector Scene::getColor(Ray r)
 	return getColor(r,max_rebounds);
 }
 
+/**
+* The main function of the project :
+* Computer the color of the pixel see by a ray, eventually after rebounds
+**/
+
 Vector Scene::getColor(Ray r, unsigned int nb_rebounds)
 {
 	Vector color; // black

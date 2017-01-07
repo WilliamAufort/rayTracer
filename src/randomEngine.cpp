@@ -6,6 +6,10 @@ using namespace std;
 
 RandomEngine::RandomEngine() : m_engine(default_random_engine()), m_distrib(uniform_real_distribution<double>(0,1)) {}
 
+/**
+* Sample a vector in the unit hemisphere directed by the input vector
+**/
+
 Vector RandomEngine::sampleHemisphere(Vector n)
 {
 	Vector i = someOrthogonal(n);

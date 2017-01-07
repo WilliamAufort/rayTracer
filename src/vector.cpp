@@ -155,20 +155,6 @@ Vector operator*(double lambda, Vector const& u)
 }
 
 /**
-* Product coordinate by coordinate
-* TODO useful ?
-**/
-
-Vector prodByCoord(Vector const& u, Vector const& v)
-{
-	double x = u.getX() * v.getX();
-	double y = u.getY() * v.getY();
-	double z = u.getZ() * v.getZ();
-	Vector res(x,y,z);
-	return res;
-}
-
-/**
 * Scalar product of two vectors
 **/
 

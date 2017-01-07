@@ -114,8 +114,8 @@ bool Sphere::isTransparent() const
 
 pair<bool,Ray> Sphere::refract(Ray r, Vector intersect) const
 {
-	Vector i = normalize(r.getDirection()); // TODO Try to avoid this
-	Vector n = normalize(normal(intersect)); // TODO IDEM
+	Vector i = normalize(r.getDirection());
+	Vector n = normalize(normal(intersect));
 	double n1 = n_air;
 	double n2 = m_material.getRefrIndex();
 	double prod = scalarProd(i,n);
