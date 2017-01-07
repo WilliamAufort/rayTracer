@@ -1,5 +1,7 @@
 # We first give mandatory global information
 #
+# The hash character is used to handle ((very) simple) comments
+#
 # Camera position, direction to look, and up direction
 Lookat (0,0,55) (0,0,-1) (1,0,0)
 
@@ -19,9 +21,10 @@ BeginSphere
 	# rgb color
 	Color (1,1,1)
 	BeginMaterial
-		Specular (coeff)
-		Transparent n (coeff)
-		Diffuse (rho in [0,1])
-		Emissive intensity
+		# The materials are given with their arguments
+		Specular
+		Transparent n
+		Diffuse (coeff in [0,1], 1 is no coefficient provided)
+		Emissive (intensity, mandatory but recommended)
 	EndMaterial
 EndSphere
