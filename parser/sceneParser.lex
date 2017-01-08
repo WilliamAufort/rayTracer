@@ -20,13 +20,7 @@ extern int line_number;	/* defined in parser.ypp */
 
 using namespace std;
 
-#ifndef DEBUG
-    bool verbose = true;
-#endif
-#ifdef DEBUG
-    bool verbose = true;
-#endif
-
+bool verbose = false; /* for stupid parser debug */
 %}
 
 whitespace  [ \t]+
@@ -44,33 +38,33 @@ float       -?([0-9]+|[0-9]*\.[0-9]+)
                             line_number++;  //
                         }                   //
 
-\n+                     { cout<<"EOL "; line_number++; return(token::EOL); }
-"("                     { cout<<"LPAR "; return(token::LPAR); }
-")"                     { cout<<"RPAR "; return(token::RPAR); }
-","                     { cout<<"SEP "; return(token::SEP); }
+\n+                     { if (verbose) {cout<<"EOL ";} line_number++; return(token::EOL); }
+"("                     { if (verbose) {cout<<"LPAR ";} return(token::LPAR); }
+")"                     { if (verbose) {cout<<"RPAR ";} return(token::RPAR); }
+","                     { if (verbose) {cout<<"SEP ";} return(token::SEP); }
 
-"Lookat"                { cout<<"LOOKAT "; return(token::LOOK_AT); }
-"CameraFov"             { cout<<"CAMERA_FOV "; return(token::CAMERA_FOV); }
-"OutputImage"           { cout<<"OUTPUT_SIZE "; return(token::OUTPUT_SIZE); }
-"LightSource"           { cout<<"LIGHT_SOURCE "; return(token::LIGHT_SOURCE); }
+"Lookat"                { if (verbose) {cout<<"LOOKAT ";} return(token::LOOK_AT); }
+"CameraFov"             { if (verbose) {cout<<"CAMERA_FOV ";} return(token::CAMERA_FOV); }
+"OutputImage"           { if (verbose) {cout<<"OUTPUT_SIZE ";} return(token::OUTPUT_SIZE); }
+"LightSource"           { if (verbose) {cout<<"LIGHT_SOURCE ";} return(token::LIGHT_SOURCE); }
 
-"BeginSphere"           { cout<<"BEGIN_SPHERE "; return(token::BEGIN_SPHERE); }
-"EndSphere"             { cout<<"END_SPHERE "; return(token::END_SPHERE); }
-"Center"                { cout<<"CENTER "; return(token::CENTER); }
-"Radius"                { cout<<"RADIUS "; return(token::RADIUS); }
-"Color"                 { cout<<"COLOR "; return(token::COLOR); }
+"BeginSphere"           { if (verbose) {cout<<"BEGIN_SPHERE ";} return(token::BEGIN_SPHERE); }
+"EndSphere"             { if (verbose) {cout<<"END_SPHERE ";} return(token::END_SPHERE); }
+"Center"                { if (verbose) {cout<<"CENTER ";} return(token::CENTER); }
+"Radius"                { if (verbose) {cout<<"RADIUS ";} return(token::RADIUS); }
+"Color"                 { if (verbose) {cout<<"COLOR ";} return(token::COLOR); }
 
-"BeginMaterial"         { cout<<"BEGIN_MATERIAL "; return(token::BEGIN_MATERIAL); }
-"EndMaterial"           { cout<<"END_MATERIAL "; return(token::END_MATERIAL); }
-"Specular"              { cout<<"SPECULAR "; return(token::SPECULAR); }
-"Transparent"           { cout<<"TRANSPARENT "; return(token::TRANSPARENT); }
-"Diffuse"               { cout<<"DIFFUSE "; return(token::DIFFUSE); }
-"Emissive"              { cout<<"EMISSIVE "; return(token::EMISSIVE); }
+"BeginMaterial"         { if (verbose) {cout<<"BEGIN_MATERIAL ";} return(token::BEGIN_MATERIAL); }
+"EndMaterial"           { if (verbose) {cout<<"END_MATERIAL ";} return(token::END_MATERIAL); }
+"Specular"              { if (verbose) {cout<<"SPECULAR ";} return(token::SPECULAR); }
+"Transparent"           { if (verbose) {cout<<"TRANSPARENT ";} return(token::TRANSPARENT); }
+"Diffuse"               { if (verbose) {cout<<"DIFFUSE ";} return(token::DIFFUSE); }
+"Emissive"              { if (verbose) {cout<<"EMISSIVE ";} return(token::EMISSIVE); }
 
 
 {float}  {
   yylval->dbl = atof(yytext);
-  cout<<"FLOAT ";
+  if (verbose) {cout<<"FLOAT ";}
   return(token::FLOAT);
 }
 

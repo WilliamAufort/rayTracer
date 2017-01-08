@@ -20,7 +20,8 @@ namespace sceneParser {
 		Camera parse(std::istream& inputStream);
 
 		void setResult(Camera& result);
-	private:
+	
+		private:
 		Lexer* lexer;
 		Parser* parser;
 		Camera result;

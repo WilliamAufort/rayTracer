@@ -18,11 +18,11 @@ int main(int argc, char* argv[])
 	{
 		cout << endl << "Use the following syntax :" << endl;
 		cout << "./rayTracer file.sc" << endl;
-		cout << "--output=file      Save the image in file" << endl;
-		cout << "--gamma            Use gamma correction" << endl;
-		cout << "--omp              Use OpenMP in a naive way" << endl;
-		cout << "--rays=nb          Use nb rays per pixel (default 1)" << endl;
-		cout << "-h / --help        You're currently in the help mode" << endl;
+		cout << "--output=file.bmp    Save the image in bmp file" << endl;
+		cout << "--gamma              Use gamma correction" << endl;
+		cout << "--omp                Use OpenMP in a naive way" << endl;
+		cout << "--rays=nb            Use nb rays per pixel (default 1)" << endl;
+		cout << "-h / --help          You're currently in the help mode" << endl;
 		return EXIT_FAILURE;
 	}
 
