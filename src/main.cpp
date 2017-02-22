@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 	{
 		cout << endl << "Syntax :" << endl;
 		cout << "./raytracer file"<< endl;
-		cout << "Use `./raytracer --help' or `./rapidex -h' for help." << endl;
+		cout << "Use `./raytracer --help' or `./raytracer -h' for help." << endl;
 		return EXIT_FAILURE;
 	}
 
